@@ -1,1 +1,1 @@
-[piece_colour, chessboard,num_moves, x_grid, y_grid] = SetUpChessBoard
+[piece_colour, chessboard,num_moves ] = SetUpChessBoard

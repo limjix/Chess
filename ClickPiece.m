@@ -11,7 +11,7 @@ function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,num_moves,pa
 %This is the board
       piecetype = B.top(x,y).name;
 
-%--------Conversion from B.Top grid to Smaller grid-----------------------
+%--------Conversion from B.Top grid to Chessboard grid--------------------
       p_x = x - 4;
       p_y = y - 4;
 %----------------------Generates Possible Moves---------------------------
@@ -21,20 +21,21 @@ switch piecetype
     case 'rook'
         [possiblemoves] = RookMovement(chessboard,piece_colour,p_x,p_y);
     case 'knight'
-        [possiblemoves] = KnightMovement(piece_colour,chessboard,p_x,p_y);
+        [possiblemoves] = KnightMovement(chessboard,piece_colour,p_x,p_y);
     case 'bishop'
         [possiblemoves] = BishopMovement(chessboard,piece_colour,p_x,p_y);
     case 'queen'
         [possiblemoves] = QueenMovement(chessboard,piece_colour,p_x,p_y);
     case 'king'
-        [possiblemoves] = KingMovement(piece_colour,chessboard,p_x,p_y);
+        [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,...
+            potential_moves,p_x,p_y);
 end
 
 
 %-------------------------------------------------------------------------
 %             REDRAWS THE BOARD BUT HIGHLIGHTS POSSIBLE MOVES
-%------------------------------------------------------------------------
-
+%-------------------------------------------------------------------------
+%------------------------------Draws Rectangles---------------------------
 icount=0;
 for i=1:71
          icount=icount+1;
@@ -42,6 +43,7 @@ for i=1:71
              rectangle('Position',[parameters.xx(icount),parameters.yy(icount),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],...
                  'FaceColor',[0.82 0.545 0.278])
+             
          else
             rectangle('Position',[parameters.xx(icount),parameters.yy(icount),...
                 parameters.dx ,parameters.dx],...
@@ -52,19 +54,24 @@ end
 %----------- Highlights possible moves------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
+        %Highlights movable squares
          if possiblemoves(r,c)==1
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','y',...
-                 'ButtonDownFcn',@movepiece)
-         %Enable capture
+                 'ButtonDownFcn',{@movepiece,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters})
+         %Highlights capturable squares
          elseif possiblemoves(r,c)==2
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r',...
-                 'ButtonDownFcn', @capturepiece)
+                 'ButtonDownFcn', {@movepiece,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters})
+          else
+              disp('o')
          end
     end
 end
-%------------------------------------------------------------------------
+%----------------------Redraws images--------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
         if ~isempty(B.top(r+B.info.pad/2,c+B.info.pad/2).image)
@@ -80,7 +87,3 @@ end
 
 %-------------------------------------------------------------------------
 %-------------------------------------------------------------------------
-
-
-%I need a way to replace information in B.TOP
-
