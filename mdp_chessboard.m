@@ -15,6 +15,7 @@ tmp = size(B.top)-B.info.pad;
 % rename variables for clarity
 rows = tmp(1); cols = tmp(2); 
 [piece_colour,chessboard,num_moves] = SetUpChessBoard;
+[potentialmoves] = analyseboard(chessboard, piece_colour,num_moves)
 
 % hsq = zeros(cols,rows);
 %  for i = 1:cols

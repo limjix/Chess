@@ -1,6 +1,14 @@
-function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,num_moves,parameters,varargin )
 %ClickPiece Obtains all the data from a user's click, highlights possible
 %moves and allows the user to make that move.
+function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,...
+    num_moves,parameters,varargin )
+%----------Determines which colour is able to be selected------------------
+if(mod(B.info.turn,2)==1)
+    colourturn = 119;
+else
+    colourturn = 98;
+end
+%-------------------------------------------------------------------------
  clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -14,6 +22,7 @@ function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,num_moves,pa
 %--------Conversion from B.Top grid to Chessboard grid--------------------
       p_x = x - 4;
       p_y = y - 4;
+if(piece_colour(p_x,p_y) == colourturn)
 %----------------------Generates Possible Moves---------------------------
 switch piecetype
     case 'pawn'
@@ -43,7 +52,6 @@ for i=1:71
              rectangle('Position',[parameters.xx(icount),parameters.yy(icount),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],...
                  'FaceColor',[0.82 0.545 0.278])
-             
          else
             rectangle('Position',[parameters.xx(icount),parameters.yy(icount),...
                 parameters.dx ,parameters.dx],...
@@ -59,15 +67,12 @@ for r=1:parameters.rows
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','y',...
                  'ButtonDownFcn',{@movepiece,x,y,B,piece_colour,chessboard...
-                 ,num_moves,parameters})
+                 ,num_moves,parameters,possiblemoves})
          %Highlights capturable squares
          elseif possiblemoves(r,c)==2
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
-                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r',...
-                 'ButtonDownFcn', {@movepiece,x,y,B,piece_colour,chessboard...
-                 ,num_moves,parameters})
-          else
-              disp('o')
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r')
+         else
          end
     end
 end
@@ -78,12 +83,21 @@ for r=1:parameters.rows
             % load the image
             [X, map, alpha]  = imread(B.top(r+B.info.pad/2,c+B.info.pad/2).image);
             % draw the image
+            %If Statement enables capture move
+            if possiblemoves(r,c) == 2
+                imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
+                mirrorImage(X),'AlphaData',mirrorImage(alpha),...
+                'ButtonDownFcn',{@capturepiece,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves});
+            else
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
                 'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,num_moves,parameters});
+            end
         end
     end
 end
-
+end
+end
 %-------------------------------------------------------------------------
 %-------------------------------------------------------------------------

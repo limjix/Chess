@@ -1,6 +1,6 @@
 %
 function [B]=movepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,varargin)
+    num_moves,parameters,PM,varargin)
 
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
@@ -13,7 +13,9 @@ clickP = get(gca,'CurrentPoint');
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
-%-------------------------------------------------------------------------
+      
+if PM(p_x,p_y)==1 %Ensures it can only move legally
+%------------Moves Data in B.TOP & deletes previous cell-------------------
 B.top(x,y) = B.top(x_ori,y_ori);
 
         B.top(x_ori,y_ori).name      = [];
@@ -74,4 +76,5 @@ for r=1:parameters.rows
     end
 end
 %---------------------------------------------------------------------------------------
+end
 end
