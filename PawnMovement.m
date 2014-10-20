@@ -48,8 +48,7 @@ switch r_colour
         
         end
         
-        %Pawn promotion
-        if(p_x==
+   
    
     case 98 %Black Case
     

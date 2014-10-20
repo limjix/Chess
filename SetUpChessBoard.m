@@ -1,6 +1,6 @@
 %SetUpChessBoard creates a new chessboard with positioned pieces.
 
-function [piece_colour,chessboard,num_moves] = SetUpChessBoard
+function [chessboard,piece_colour,num_moves] = SetUpChessBoard
 
 chessboard = zeros(8,8); %Pre-allocates space
 
