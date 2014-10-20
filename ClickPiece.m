@@ -21,13 +21,13 @@ switch piecetype
     case 'rook'
         [possiblemoves] = RookMovement(chessboard,piece_colour,p_x,p_y);
     case 'knight'
-        [possiblemoves] = KnightMovement(chessboard,piece_colour,p_x,p_y);
+        [possiblemoves] = KnightMovement(piece_colour,chessboard,p_x,p_y);
     case 'bishop'
         [possiblemoves] = BishopMovement(chessboard,piece_colour,p_x,p_y);
     case 'queen'
         [possiblemoves] = QueenMovement(chessboard,piece_colour,p_x,p_y);
     case 'king'
-        [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,p_x,p_y);
+        [possiblemoves] = KingMovement(piece_colour,chessboard,p_x,p_y);
 end
 
 
