@@ -4,15 +4,10 @@ function [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,potent
 r_colour = piece_colour(p_x,p_y);
 possiblemoves = zeros(8,8);
 
-<<<<<<< HEAD
-%-------------------------------------------------------------------------
-%                           Movement(8 possible directions)
-%-------------------------------------------------------------------------
-=======
 %------------------------------------------------------------------------
 %                        Movement (8 Directions)
 %------------------------------------------------------------------------
->>>>>>> my-new-branch
+
     
     if(p_x+1<9)
         if (piece_colour(p_x+1,p_y)~= r_colour && chessboard(p_x+1,p_y)~=0)
@@ -93,17 +88,12 @@ possiblemoves = zeros(8,8);
             possiblemoves(p_x-1,p_y-1) = 1;
         end
     end
-<<<<<<< HEAD
-%--------------------------------------------------------------------------   
-%                                     Castling 
-%--------------------------------------------------------------------------    
-=======
-    
+
 %-------------------------------------------------------------------------   
 %                                  Castling 
 %-------------------------------------------------------------------------
 
->>>>>>> my-new-branch
+
    %For white king 
    if (piece_colour(p_x,p_y)==119 && num_moves(p_x,p_y)==0 && num_moves(8,8)==0..... 
            && piece_colour(8,6)==0 && piece_colour(8,7)==0 && potential_moves(8,6)==0.....  

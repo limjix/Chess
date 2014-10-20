@@ -2,6 +2,7 @@
 %moves and allows the user to make that move.
 function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,...
     num_moves,parameters,varargin )
+
 %----------Determines which colour is able to be selected------------------
 if(mod(B.info.turn,2)==1)
     colourturn = 119;
@@ -26,8 +27,10 @@ end
 %--------Conversion from B.Top grid to Chessboard grid--------------------
       p_x = x - 4;
       p_y = y - 4;
+
 if(piece_colour(p_x,p_y) == colourturn)
 %----------------------Generates Possible Moves---------------------------
+
 switch piecetype
     case 'pawn'
         [possiblemoves] = PawnMovement(chessboard,piece_colour,num_moves,p_x,p_y);

@@ -48,10 +48,6 @@ switch r_colour
         
         end
         
-<<<<<<< HEAD
-   
-=======
->>>>>>> my-new-branch
    
     case 98 %Black Case
     

@@ -14,7 +14,7 @@ delete(findobj(uih.f1,'type','axes'))
 tmp = size(B.top)-B.info.pad;
 % rename variables for clarity
 rows = tmp(1); cols = tmp(2); 
-[piece_colour,chessboard,num_moves] = SetUpChessBoard;
+[chessboard,piece_colour,num_moves] = SetUpChessBoard;
 
 % hsq = zeros(cols,rows);
 %  for i = 1:cols
