@@ -30,6 +30,8 @@ switch piecetype
         [possiblemoves] = KingMovement(piece_colour,chessboard,p_x,p_y);
 end
 
+
+test
 %-------------------------------------------------------------------------
 %             REDRAWS THE BOARD BUT HIGHLIGHTS POSSIBLE MOVES
 %------------------------------------------------------------------------
