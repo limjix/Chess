@@ -1,6 +1,6 @@
 %Analyseboard Looks at one colour, sees where each piece is able to
 %move. This is to allow for the Check function and castling.
-function [potentialmoves] = analyseboard(chessboard, piece_colour)
+function [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves)
 
 %Initialisation ----------------------------------------------------------
 [p_x, p_y] = find(piece_colour == 98);
@@ -15,7 +15,7 @@ for i=1:n_remaining
     %Based on the type of piece, its movement is calculated
     switch p_type
         case 1
-            [move] = PawnMovement(piece_colour,chessboard,p_x(i),p_y(i));
+            [move] = PawnMovement(chessboard,piece_colour,num_moves,p_x(i),p_y(i));
             %disp('Pawn');
         case 5
             [move] = RookMovement(chessboard,piece_colour,p_x(i),p_y(i));
@@ -24,13 +24,13 @@ for i=1:n_remaining
             [move] = BishopMovement(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Bishop');
         case 3
-            [move] = KnightMovement(piece_colour,chessboard,p_x(i),p_y(i));
+            [move] = KnightMovement(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Knight');
         case 9
             [move] = QueenMovement(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Queen');
         case 10
-            [move] = KingMovement(piece_colour,chessboard,p_x(i),p_y(i));
+            [move] = KingMovement(chessboard,piece_colour,num_moves,p_x(i),p_y(i));
             %disp('King');
     end
     

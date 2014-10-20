@@ -1,4 +1,4 @@
-function [possiblemoves] = KnightMovement(piece_colour,chessboard,p_x,p_y)
+function [possiblemoves] = KnightMovement(chessboard,piece_colour,p_x,p_y)
 
 %Initialisation values --------------------------------------------------
 r_colour = piece_colour(p_x,p_y);
