@@ -1,0 +1,67 @@
+
+function [possiblemoves] = RookMovement(chessboard,piece_colour)
+
+%Initialisation values --------------------------------------------------
+rookpos = [100 7];
+r_colour = piece_colour(b_x,b_y);
+possiblemoves = zeros(8,8);
+b_x = 9 - rookpos(2); %Conversion from chessgrid to MATLAB coordinates
+b_y = rookpos(1)-96;  %Conversion from chessgrid to MATLAB coordinates
+
+%This section allows movement in vertical direction -----------------------
+i = 1;
+while(b_x+i<9)
+    if(piece_colour(b_x+i,b_y)== r_colour)
+        break
+    end
+    if(piece_colour(b_x+i,b_y)~= r_colour && chessboard(b_x+i,b_y)~=0)
+        possiblemoves(b_x+i,b_y) = 2;
+        break
+    end
+    possiblemoves(b_x+i,b_y) = 1;
+    i = i+1;
+end
+            
+i = 1;
+while(b_x-i>0)
+    if(piece_colour(b_x-i,b_y)== r_colour)
+        break
+    end
+     if(piece_colour(b_x-i,b_y)~= r_colour && chessboard(b_x-i,b_y)~=0)
+        possiblemoves(b_x-i,b_y) = 2;
+        break
+    end
+    possiblemoves(b_x-i,b_y) = 1;
+    i = i+1;
+end
+
+%This section allows movement in the horizontal direction
+i = 1;
+while(b_y+i<9)
+    if(piece_colour(b_x,b_y+i)== r_colour)
+        break
+    end
+    if(piece_colour(b_x,b_y+i)~= r_colour && chessboard(b_x,b_y+i)~=0)
+        possiblemoves(b_x,b_y+i) = 2;
+        break
+    end
+    possiblemoves(b_x,b_y+i) = 1;
+    i = i+1;
+end
+
+i = 1;
+while(b_y-i>0)
+    if(piece_colour(b_x,b_y-i)== r_colour)
+        break
+    end
+    if(piece_colour(b_x,b_y-i)~= r_colour && chessboard(b_x,b_y-i)~=0)
+        possiblemoves(b_x,b_y-i) = 2;
+        break
+    end
+    possiblemoves(b_x,b_y-i) = 1;
+    i = i+1;
+end
+
+%-------------------------------------------------------------------------
+
+end
