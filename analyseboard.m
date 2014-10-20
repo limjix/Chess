@@ -42,7 +42,7 @@ end
 %-------------------------------------------------------------------------
 
 %-------------------Capture Analysis--------------------------------------
-potentialcaptures = potentialmoves ~= 0 & chessboard~= 0
+potentialcaptures = potentialmoves ~= 0 & chessboard~= 0;
 capt_index = find(potentialcaptures==1);
 num_pot_capture = length(capt_index);
 capt_value_sum = sum(chessboard(capt_index));

@@ -1,6 +1,14 @@
 function [B]=capturepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
 
+if(mod(B.info.turn,2)==1)
+    colourturn = 119;
+    oppositecolour = 98;
+else
+    colourturn = 98;
+    oppositecolour = 119;
+end
+
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -45,6 +53,10 @@ num_moves(p_x,p_y) = num_moves(ori_x,ori_y) + 1;
 chessboard(ori_x,ori_y) = 0;
 piece_colour(ori_x,ori_y) = 0;
 num_moves(ori_x,ori_y) = 0;
+
+%-------------Analyses for potential checks & provides game stats---------
+[potential_moves] = analyseboard(chessboard, piece_colour,num_moves,oppositecolour);
+
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------

@@ -5,9 +5,13 @@ function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,...
 %----------Determines which colour is able to be selected------------------
 if(mod(B.info.turn,2)==1)
     colourturn = 119;
+    oppositecolour = 98;
 else
     colourturn = 98;
+    oppositecolour = 119;
 end
+%-------------Analyses Board. Mainly for check purposes -------------------
+[potential_moves] = analyseboard(chessboard, piece_colour,num_moves,oppositecolour);
 %-------------------------------------------------------------------------
  clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
