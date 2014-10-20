@@ -1,5 +1,4 @@
-%
-function [B]=movepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+function [B]=capturepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
 
 if(mod(B.info.turn,2)==1)
@@ -17,15 +16,16 @@ clickP = get(gca,'CurrentPoint');
       x = 13-x;      
       y = y + 4;
 %--------Conversion from B.Top grid to Chessboard grid--------------------
-      p_x = x - 4;
+      p_x = x - 4; %p_x is necessary because it is the current clicked position
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
       
-if PM(p_x,p_y)==1 %Ensures it can only move legally
+if PM(p_x,p_y)==2 %Ensures it can only capture
 %------------Moves Data in B.TOP & deletes previous cell-------------------
 B.top(x,y) = B.top(x_ori,y_ori);
 
+%Restores previous cell to empty
         B.top(x_ori,y_ori).name      = [];
         B.top(x_ori,y_ori).colour     = 0;
         B.top(x_ori,y_ori).move      = [];
@@ -39,7 +39,7 @@ B.top(x,y) = B.top(x_ori,y_ori);
         B.top(x_ori,y_ori).type      = 'empty';
         B.top(x_ori,y_ori).image     = [];
         B.top(x_ori,y_ori).himg      = [];
-        
+     
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
@@ -56,6 +56,7 @@ num_moves(ori_x,ori_y) = 0;
 
 %-------------Analyses for potential checks & provides game stats---------
 [potential_moves] = analyseboard(chessboard, piece_colour,num_moves,oppositecolour);
+
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
@@ -73,7 +74,6 @@ for i=1:71
          end
 end
 
-%------------------------------------------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
         if ~isempty(B.top(r+B.info.pad/2,c+B.info.pad/2).image)
@@ -86,7 +86,6 @@ for r=1:parameters.rows
         end
     end
 end
-
-%-------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------
 end
 end

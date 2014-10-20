@@ -30,7 +30,7 @@ for i=1:n_remaining
             [move] = QueenMovement(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Queen');
         case 10
-            [move] = KingMovement(chessboard,piece_colour,num_moves,p_x(i),p_y(i));
+            [move] = KingMovement(chessboard,piece_colour,num_moves,potentialmoves,p_x(i),p_y(i));
             %disp('King');
     end
     
