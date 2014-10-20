@@ -1,9 +1,9 @@
 %Analyseboard Looks at one colour, sees where each piece is able to
 %move. This is to allow for the Check function and castling.
-function [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves)
+function [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,colour)
 
 %Initialisation ----------------------------------------------------------
-[p_x, p_y] = find(piece_colour == 98);
+[p_x, p_y] = find(piece_colour == colour);
 n_remaining = length(p_x);
 potentialmoves = zeros(8,8);
 
@@ -42,15 +42,15 @@ end
 %-------------------------------------------------------------------------
 
 %-------------------Capture Analysis--------------------------------------
-potentialcaptures = potentialmoves ~= 0 & chessboard~= 0
+potentialcaptures = potentialmoves ~= 0 & chessboard~= 0;
 capt_index = find(potentialcaptures==1);
-num_pot_capture = length(capt_index)
-capt_value_sum = sum(chessboard(capt_index))
+num_pot_capture = length(capt_index);
+capt_value_sum = sum(chessboard(capt_index));
 
 %------------------ Moves Analysis ---------------------------------------
-nocapture = potentialmoves
-nocapture(capt_index) = 0
-num_moves_available = sum(sum(nocapture))
+nocapture = potentialmoves;
+nocapture(capt_index) = 0;
+num_moves_available = sum(sum(nocapture));
 
 %-------------------- King In Check --------------------------------------
 king_index = find(chessboard == 10 & piece_colour == 119);

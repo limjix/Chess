@@ -27,7 +27,8 @@ switch piecetype
     case 'queen'
         [possiblemoves] = QueenMovement(chessboard,piece_colour,p_x,p_y);
     case 'king'
-        [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,p_x,p_y);
+        [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,...
+            potential_moves,p_x,p_y);
 end
 
 
