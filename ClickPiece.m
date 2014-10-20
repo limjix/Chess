@@ -54,11 +54,13 @@ for r=1:parameters.rows
     for c=1:parameters.cols
          if possiblemoves(r,c)==1
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
-                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','y')
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','y',...
+                 'ButtonDownFcn',@movepiece)
          %Enable capture
          elseif possiblemoves(r,c)==2
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
-                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r')
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r',...
+                 'ButtonDownFcn', @capturepiece)
          end
     end
 end
