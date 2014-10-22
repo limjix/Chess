@@ -69,21 +69,41 @@ end
 %----------- Highlights possible moves------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
-        %Highlights movable squares
-         if possiblemoves(r,c)==1
+        switch possiblemoves(r,c)
+%_______________________Highlights movable squares________________________
+            case 1
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','y',...
                  'ButtonDownFcn',{@movepiece,x,y,B,piece_colour,chessboard...
                  ,num_moves,parameters,possiblemoves})
-         %Highlights capturable squares
-         elseif possiblemoves(r,c)==2
+%_______________________Highlights capturable squares______________________
+            case 2
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r')
-         else
+%_______________________Highlights Enpassant Squares_______________________
+            case 3
+             rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r',...
+                 'ButtonDownFcn',{@Enpassant,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves})
+%_______________________Highlights Castling Squares________________________
+            case 4
+             rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','b',...
+                 'ButtonDownFcn',{@Castling,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves})
+%_______________________Highlights Pawn Promotion Square___________________
+            case 5
+             rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','c',...
+                 'ButtonDownFcn',{@PawnPromo,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves})
          end
     end
 end
-%----------------------Redraws images--------------------------------------
+%--------------------------------------------------------------------------
+%                             Redraws images 
+%--------------------------------------------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
         if ~isempty(B.top(r+B.info.pad/2,c+B.info.pad/2).image)

@@ -1,6 +1,10 @@
+%CapturePiece Part of the Click Series of Functions - Enables capture
 function [B]=capturepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
 
+%--------------------------------------------------------------------------
+%                  Init values,conversions and click location
+%--------------------------------------------------------------------------
 if(mod(B.info.turn,2)==1)
     colourturn = 119;
     oppositecolour = 98;
@@ -21,8 +25,10 @@ clickP = get(gca,'CurrentPoint');
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
       
-if PM(p_x,p_y)==2 %Ensures it can only capture
-%------------Moves Data in B.TOP & deletes previous cell-------------------
+if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 %Ensures it can only capture
+%--------------------------------------------------------------------------
+%                Moves Data in B.TOP & deletes previous cell
+%--------------------------------------------------------------------------
 B.top(x,y) = B.top(x_ori,y_ori);
 
 %Restores previous cell to empty

@@ -1,7 +1,10 @@
-%
+%Movepiece Part of the Click Series of Functions - Enables movement
 function [B]=movepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
 
+%--------------------------------------------------------------------------
+%                  Init values,conversions and click location
+%--------------------------------------------------------------------------
 if(mod(B.info.turn,2)==1)
     colourturn = 119;
     oppositecolour = 98;
@@ -23,7 +26,9 @@ clickP = get(gca,'CurrentPoint');
       ori_y = y_ori - 4; %x_ori is for B.top
       
 if PM(p_x,p_y)==1 %Ensures it can only move legally
-%------------Moves Data in B.TOP & deletes previous cell-------------------
+%--------------------------------------------------------------------------
+%                Moves Data in B.TOP & deletes previous cell
+%--------------------------------------------------------------------------
 B.top(x,y) = B.top(x_ori,y_ori);
 
         B.top(x_ori,y_ori).name      = [];
