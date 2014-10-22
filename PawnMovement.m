@@ -62,7 +62,6 @@ switch r_colour
         end
         
    
-   
     case 98 %Black Case
     
         if(p_x+1<9) %Forward movement

@@ -5,7 +5,7 @@ uih.f1 = figure('Name',mfilename,'Unit','normalized',...
 %GameType='Contemporary',
 B = BoardInitialization('Contemporary');
 
-% ======= BOARD GRAPHICS =======
+% ========================== BOARD GRAPHICS ==============================
 % clear the figure
 delete(findobj(uih.f1,'type','axes'))
 
@@ -14,7 +14,7 @@ delete(findobj(uih.f1,'type','axes'))
 tmp = size(B.top)-B.info.pad;
 % rename variables for clarity
 rows = tmp(1); cols = tmp(2); 
-[piece_colour,chessboard,num_moves] = SetUpChessBoard;
+[chessboard,piece_colour,num_moves] = SetUpChessBoard;
 
 % hsq = zeros(cols,rows);
 %  for i = 1:cols
@@ -30,7 +30,7 @@ rows = tmp(1); cols = tmp(2);
 %  end
 
 
-% create axes object for plotting
+%--------------- create axes object for plotting -------------------------
 axBoard = axes('color','none', ...
     'xlim',[0 cols]+[-.1 .1],'ylim',[0 rows]+[-.1 .1],...
     'xtick',[],'ytick',[],...
@@ -49,6 +49,7 @@ hlastmove = rectangle('position',[0 0 1 1],'facecolor','none',...
     'linewidth',1,'visible','off','edgecolor',[0.2 0.8 0.2],'linewidth',3);
 % good yellow color if rectangle uistack works again: [0.95 0.95 0]
 
+%-------------------- Initialise parameters for Rectangles ----------------
 x =[   -0.0709   8.0709];
 y=x;
 dx=(x(2)-x(1))/8;
@@ -61,6 +62,9 @@ parameters.dx=dx;
 parameters.rows=rows;
 parameters.cols=cols;
 
+%-------------------------------------------------------------------------
+%                       Draws the rectangles
+%-------------------------------------------------------------------------
 icount=0
 for i=1:71
          icount=icount+1;
@@ -71,6 +75,9 @@ for i=1:71
          end
 end
 
+%--------------------------------------------------------------------------
+%                   Draws piece images & associates Click Piece
+%--------------------------------------------------------------------------
 for r=1:rows
     for c=1:cols       
         % if there is an image associated with this square, render it

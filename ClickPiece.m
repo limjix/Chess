@@ -1,6 +1,19 @@
-function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,num_moves,parameters,varargin )
 %ClickPiece Obtains all the data from a user's click, highlights possible
 %moves and allows the user to make that move.
+function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,...
+    num_moves,parameters,varargin )
+
+%----------Determines which colour is able to be selected------------------
+if(mod(B.info.turn,2)==1)
+    colourturn = 119;
+    oppositecolour = 98;
+else
+    colourturn = 98;
+    oppositecolour = 119;
+end
+%-------------Analyses Board. Mainly for check purposes -------------------
+[potential_moves] = analyseboard(chessboard, piece_colour,num_moves,oppositecolour);
+%-------------------------------------------------------------------------
  clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -11,30 +24,34 @@ function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,num_moves,pa
 %This is the board
       piecetype = B.top(x,y).name;
 
-%--------Conversion from B.Top grid to Smaller grid-----------------------
+%--------Conversion from B.Top grid to Chessboard grid--------------------
       p_x = x - 4;
       p_y = y - 4;
+
+if(piece_colour(p_x,p_y) == colourturn)
 %----------------------Generates Possible Moves---------------------------
+
 switch piecetype
     case 'pawn'
         [possiblemoves] = PawnMovement(chessboard,piece_colour,num_moves,p_x,p_y);
     case 'rook'
         [possiblemoves] = RookMovement(chessboard,piece_colour,p_x,p_y);
     case 'knight'
-        [possiblemoves] = KnightMovement(piece_colour,chessboard,p_x,p_y);
+        [possiblemoves] = KnightMovement(chessboard,piece_colour,p_x,p_y);
     case 'bishop'
         [possiblemoves] = BishopMovement(chessboard,piece_colour,p_x,p_y);
     case 'queen'
         [possiblemoves] = QueenMovement(chessboard,piece_colour,p_x,p_y);
     case 'king'
-        [possiblemoves] = KingMovement(piece_colour,chessboard,p_x,p_y);
+        [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,...
+            potential_moves,p_x,p_y);
 end
 
 
 %-------------------------------------------------------------------------
 %             REDRAWS THE BOARD BUT HIGHLIGHTS POSSIBLE MOVES
-%------------------------------------------------------------------------
-
+%-------------------------------------------------------------------------
+%------------------------------Draws Rectangles---------------------------
 icount=0;
 for i=1:71
          icount=icount+1;
@@ -52,35 +69,62 @@ end
 %----------- Highlights possible moves------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
-         if possiblemoves(r,c)==1
+        switch possiblemoves(r,c)
+%_______________________Highlights movable squares________________________
+            case 1
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','y',...
-                 'ButtonDownFcn',@movepiece)
-         %Enable capture
-         elseif possiblemoves(r,c)==2
+                 'ButtonDownFcn',{@movepiece,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves})
+%_______________________Highlights capturable squares______________________
+            case 2
+             rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r')
+%_______________________Highlights Enpassant Squares_______________________
+            case 3
              rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
                  parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','r',...
-                 'ButtonDownFcn', @capturepiece)
+                 'ButtonDownFcn',{@Enpassant,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves})
+%_______________________Highlights Castling Squares________________________
+            case 4
+             rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','b',...
+                 'ButtonDownFcn',{@Castling,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves})
+%_______________________Highlights Pawn Promotion Square___________________
+            case 5
+             rectangle('Position',[parameters.xx(9-r,c),parameters.yy(9-r,c),...
+                 parameters.dx ,parameters.dx],'Curvature',[0,0],'FaceColor','c',...
+                 'ButtonDownFcn',{@PawnPromo,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves})
          end
     end
 end
-%------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%                             Redraws images 
+%--------------------------------------------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
         if ~isempty(B.top(r+B.info.pad/2,c+B.info.pad/2).image)
             % load the image
             [X, map, alpha]  = imread(B.top(r+B.info.pad/2,c+B.info.pad/2).image);
             % draw the image
+            %If Statement enables capture move
+            if possiblemoves(r,c) == 2
+                imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
+                mirrorImage(X),'AlphaData',mirrorImage(alpha),...
+                'ButtonDownFcn',{@capturepiece,x,y,B,piece_colour,chessboard...
+                 ,num_moves,parameters,possiblemoves});
+            else
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
                 'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,num_moves,parameters});
+            end
         end
     end
 end
-
+end
+end
 %-------------------------------------------------------------------------
 %-------------------------------------------------------------------------
-
-
-%I need a way to replace information in B.TOP
-
