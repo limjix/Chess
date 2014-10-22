@@ -22,27 +22,40 @@ switch r_colour
         if(p_x-1>0 && p_y-1 >0) %Capture left
             if(piece_colour(p_x-1,p_y-1)~=r_colour && chessboard(p_x-1,p_y-1)~=0)
                 possiblemoves(p_x-1,p_y-1) = 2;
+                   if(p_x==2) %Capture and pawn promotion
+                      possiblemoves(p_x-1,p_y-1) = 5;
+                   end
             end
         end
 
         if(p_x-1>0 && p_y+1<9) %Capture right
             if(piece_colour(p_x-1,p_y+1)~=r_colour && chessboard(p_x-1,p_y+1)~=0)
                 possiblemoves(p_x-1,p_y+1) = 2;
+                   if(p_x==2) %Capture and pawn promotion
+                      possiblemoves(p_x-1,p_y+1) = 5;
+                   end
             end
         end    
-           
+        
+        %Pawn promotion----------------------------------------------------
+        if(p_x==2) 
+            if(chessboard(p_x-1,p_y)==0)
+                possiblemoves(p_x-1,p_y) = 5;
+            end
+        end
+        
         %En passant-------------------------------------------------------
         if (p_x==4)
             
             if(p_x-1>0 && p_y-1 >0) %Capture left
                 if(piece_colour(p_x,p_y-1)~=r_colour && chessboard(p_x,p_y-1)==1 && num_moves(p_x,p_y-1)==1)
-                    possiblemoves(p_x-1,p_y-1) = 2;
+                    possiblemoves(p_x-1,p_y-1) = 3;
                 end
             end
 
             if(p_x-1>0 && p_y+1<9) %Capture right
                 if(piece_colour(p_x,p_y+1)~=r_colour && chessboard(p_x,p_y+1)==1 && num_moves(p_x,p_y+1)==1)
-                    possiblemoves(p_x-1,p_y+1) = 2;
+                    possiblemoves(p_x-1,p_y+1) = 3;
                 end    
             end
         
@@ -52,26 +65,40 @@ switch r_colour
    
     case 98 %Black Case
     
-        if(p_x+1<9)
+        if(p_x+1<9) %Forward movement
             if(chessboard(p_x+1,p_y)==0) 
                 possiblemoves(p_x+1,p_y) = 1;
             end
         end
 
+        %Initial Forward movement
         if(p_x==2 && chessboard(p_x+2,p_y)==0 && chessboard(p_x+1,p_y)==0)
             possiblemoves(p_x+2,p_y) = 1;
         end
         
-        if(p_x+1<9 && p_y-1>0)
+        if(p_x+1<9 && p_y-1>0) %Capture left
             if(piece_colour(p_x+1,p_y-1)~=r_colour && chessboard(p_x+1,p_y-1)~=0)
                 possiblemoves(p_x+1,p_y-1) = 2;
+                  if(p_x==7) %Capture and pawn promotion
+                      possiblemoves(p_x+1,p_y-1) = 5;
+                   end
             end
         end
         
-        if(p_x+1<9 && p_y+1<9)
+        if(p_x+1<9 && p_y+1<9) %Capture right
             if(piece_colour(p_x+1,p_y+1)~=r_colour && chessboard(p_x+1,p_y+1)~=0)
                 possiblemoves(p_x+1,p_y+1) = 2;
+                   if(p_x==7) %Capture and pawn promotion
+                      possiblemoves(p_x+1,p_y+1) = 5;
+                   end
             end   
+        end
+        
+        %Pawn promotion----------------------------------------------------
+        if(p_x==7)
+            if(chessboard(p_x+1,p_y)==0) 
+                possiblemoves(p_x+1,p_y) = 5;
+            end
         end
         
          %En passant-------------------------------------------------------
@@ -79,13 +106,13 @@ switch r_colour
             
             if(p_x-1>0 && p_y-1 >0) %Capture left
                 if(piece_colour(p_x,p_y-1)~=r_colour && chessboard(p_x,p_y-1)==1 && num_moves(p_x,p_y-1)==1)
-                    possiblemoves(p_x+1,p_y-1) = 2;
+                    possiblemoves(p_x+1,p_y-1) = 3;
                 end
             end
 
             if(p_x-1>0 && p_y+1<9) %Capture right
                 if(piece_colour(p_x,p_y+1)~=r_colour && chessboard(p_x,p_y+1)==1 && num_moves(p_x,p_y+1)==1)
-                    possiblemoves(p_x+1,p_y+1) = 2;
+                    possiblemoves(p_x+1,p_y+1) = 3;
                 end    
             end
         
