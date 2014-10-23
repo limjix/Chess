@@ -1,7 +1,7 @@
 %ClickPiece Obtains all the data from a user's click, highlights possible
 %moves and allows the user to make that move.
 function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,...
-    num_moves,parameters,varargin )
+    num_moves,parameters,potentialmoves,varargin )
 
 %----------Determines which colour is able to be selected------------------
 if(mod(B.info.turn,2)==1)
@@ -11,8 +11,7 @@ else
     colourturn = 98;
     oppositecolour = 119;
 end
-%-------------Analyses Board. Mainly for check purposes -------------------
-[potential_moves] = analyseboard(chessboard, piece_colour,num_moves,oppositecolour);
+
 %-------------------------------------------------------------------------
  clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
@@ -44,7 +43,7 @@ switch piecetype
         [possiblemoves] = QueenMovement(chessboard,piece_colour,p_x,p_y);
     case 'king'
         [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,...
-            potential_moves,p_x,p_y);
+            potentialmoves,p_x,p_y);
 end
 
 
@@ -119,7 +118,8 @@ for r=1:parameters.rows
             else
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
-                'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,num_moves,parameters});
+                'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,...
+                num_moves,parameters,potentialmoves});
             end
         end
     end

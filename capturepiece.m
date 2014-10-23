@@ -61,7 +61,7 @@ piece_colour(ori_x,ori_y) = 0;
 num_moves(ori_x,ori_y) = 0;
 
 %-------------Analyses for potential checks & provides game stats---------
-[potential_moves] = analyseboard(chessboard, piece_colour,num_moves,oppositecolour);
+[potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppositecolour);
 
 %-------------------------------------------------------------------------
 %                           Redraws the Board
@@ -88,7 +88,8 @@ for r=1:parameters.rows
             % draw the image
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
-                'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,num_moves,parameters});
+                'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,...
+                num_moves,parameters,potentialmoves});
         end
     end
 end

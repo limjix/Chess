@@ -74,7 +74,8 @@ for i=1:71
          rectangle('Position',[xx(icount),yy(icount),dx ,dx],'Curvature',[0,0],'FaceColor',[1 0.808 0.62])             
          end
 end
-
+%----------------------Analyses Board--------------------------------------
+[potentialmoves,capt_index] = analyseboard(chessboard, piece_colour,num_moves,98);
 %--------------------------------------------------------------------------
 %                   Draws piece images & associates Click Piece
 %--------------------------------------------------------------------------
@@ -87,7 +88,8 @@ for r=1:rows
             % draw the image
             imHdls(r,c) = image(c+[0 1]-1,[rows-1 rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
-                'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,num_moves,parameters,uih.f1,hlastmove,hax});
+                'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,num_moves,...
+                parameters,potentialmoves,uih.f1,hlastmove,hax});
             % each image has a corresponding rules file, upload that file
             % path to the user data of this image
             set(imHdls(r,c),'UserData',B.top(r+B.info.pad/2,c+B.info.pad/2).rules)

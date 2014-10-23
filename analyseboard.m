@@ -1,6 +1,8 @@
 %Analyseboard Looks at one colour, sees where each piece is able to
 %move. This is to allow for the Check function and castling.
-function [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,colour)
+%Colour in this case can be either current one or opposing one
+%Use oppositecolour to generate threats and threat captures
+function [potentialmoves,capt_index] = analyseboard(chessboard, piece_colour,num_moves,colour)
 
 %Initialisation ----------------------------------------------------------
 [p_x, p_y] = find(piece_colour == colour);
@@ -40,6 +42,8 @@ end
 %-------------------------------------------------------------------------
 %                     Analysis of potentialmoves
 %-------------------------------------------------------------------------
+%--------------------- Piece Analysis ------------------------------------
+
 
 %-------------------Capture Analysis--------------------------------------
 potentialcaptures = potentialmoves ~= 0 & chessboard~= 0;
@@ -52,11 +56,6 @@ nocapture = potentialmoves;
 nocapture(capt_index) = 0;
 num_moves_available = sum(sum(nocapture));
 
-%-------------------- King In Check --------------------------------------
-king_index = find(chessboard == 10 & piece_colour == 119);
-kingincheck = ismember(king_index,capt_index);
-if(kingincheck)
-    disp('Check')
-end
+
 
 end
