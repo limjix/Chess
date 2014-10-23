@@ -14,7 +14,7 @@ possiblemoves = zeros(8,8);
 
 >>>>>>> origin/master
     
-    if(p_x+1<9 && potential_moves(p_x+1,p_y)==0)
+    if(p_x+1<9)
         if (piece_colour(p_x+1,p_y)~= r_colour && chessboard(p_x+1,p_y)~=0)
             possiblemoves(p_x+1,p_y) = 2;
         elseif (piece_colour(p_x+1,p_y)== r_colour)
@@ -25,7 +25,7 @@ possiblemoves = zeros(8,8);
     end
     
     
-    if(p_x+1<9 & p_y+1<9 && potential_moves(p_x+1,p_y+1)==0)
+    if(p_x+1<9 && p_y+1<9)
         if (piece_colour(p_x+1,p_y+1)~= r_colour && chessboard(p_x+1,p_y+1)~=0)
             possiblemoves(p_x+1,p_y+1) = 2;
         elseif (piece_colour(p_x+1,p_y+1)== r_colour)
@@ -36,7 +36,7 @@ possiblemoves = zeros(8,8);
     end
     
     
-    if(p_x+1<9 & p_y-1>0 && potential_moves(p_x+1,p_y-1)==0)
+    if(p_x+1<9 && p_y-1>0)
         if (piece_colour(p_x+1,p_y-1)~= r_colour && chessboard(p_x+1,p_y-1)~=0)
             possiblemoves(p_x+1,p_y-1) = 2;
         elseif (piece_colour(p_x+1,p_y-1)== r_colour)
@@ -47,7 +47,7 @@ possiblemoves = zeros(8,8);
     end
     
     
-    if(p_y+1<9 && potential_moves(p_x,p_y+1)==0)
+    if(p_y+1<9)
         if (piece_colour(p_x,p_y+1)~= r_colour && chessboard(p_x,p_y+1)~=0)
             possiblemoves(p_x,p_y+1) = 2;
         elseif (piece_colour(p_x,p_y+1)== r_colour)
@@ -58,7 +58,7 @@ possiblemoves = zeros(8,8);
     end
     
     
-    if(p_y-1>0 && potential_moves(p_x,p_y-1)==0)
+    if(p_y-1>0)
         if (piece_colour(p_x,p_y-1)~= r_colour && chessboard(p_x,p_y-1)~=0)
             possiblemoves(p_x,p_y-1) = 2;
         elseif (piece_colour(p_x,p_y-1)== r_colour)
@@ -69,7 +69,7 @@ possiblemoves = zeros(8,8);
     end
     
     
-    if(p_x-1>0 && potential_moves(p_x-1,p_y)==0)
+    if(p_x-1>0)
         if (piece_colour(p_x-1,p_y)~= r_colour && chessboard(p_x-1,p_y)~=0)
             possiblemoves(p_x-1,p_y) = 2;
         elseif (piece_colour(p_x-1,p_y)== r_colour)
@@ -80,7 +80,7 @@ possiblemoves = zeros(8,8);
     end
     
     
-    if(p_x-1>0 & p_y+1<9 && potential_moves(p_x-1,p_y+1)==0)
+    if(p_x-1>0 && p_y+1<9)
         if (piece_colour(p_x-1,p_y+1)~= r_colour && chessboard(p_x-1,p_y+1)~=0)
             possiblemoves(p_x-1,p_y+1) = 2;
         elseif (piece_colour(p_x-1,p_y+1)== r_colour)
@@ -91,7 +91,7 @@ possiblemoves = zeros(8,8);
     end
     
     
-    if(p_x-1>0 & p_y-1>0 && potential_moves(p_x-1,p_y-1)==0)
+    if(p_x-1>0 && p_y-1>0)
         if (piece_colour(p_x-1,p_y-1)~= r_colour && chessboard(p_x-1,p_y-1)~=0)
             possiblemoves(p_x-1,p_y-1) = 2;
         elseif (piece_colour(p_x-1,p_y-1)== r_colour)
