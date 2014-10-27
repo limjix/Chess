@@ -7,9 +7,11 @@ function [B]=PawnPromo(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
 %--------------------------------------------------------------------------
 if(mod(B.info.turn,2)==1)
     colourturn = 119;
+    colour = 1;
     oppositecolour = 98;
 else
     colourturn = 98;
+    colour = -1;
     oppositecolour = 119;
 end
 
@@ -53,11 +55,36 @@ if value==1
 end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
-if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 && value==0
+if PM(p_x,p_y)==5 && value==0
 %--------------------------------------------------------------------------
 %                Moves Data in B.TOP & deletes previous cell
 %--------------------------------------------------------------------------
-B.top(x,y) = B.top(x_ori,y_ori);
+
+%Allows user to input desired piece. Checks legality.
+disp('Pawn has been promoted');
+            flags=0
+          while(flags==0)
+              flags=1;
+              pawn_prom = input('Please enter a valid piece name\n','s')
+              
+            switch pawn_prom
+                case 'rook'
+                    chessboard(p_x,p_y)= 5;
+                case 'queen'
+                    chessboard(p_x,p_y)= 9;
+                case 'knight'
+                    chessboard(p_x,p_y)= 3;
+                case 'bishop'
+                    chessboard(p_x,p_y)= 4;
+                otherwise
+                    disp('Invalid input');
+                    flags=0;
+            end   
+          end
+          
+%Generates the desired piece
+B.top(x,y) = NewPiece(pawn_prom,colour);
+
 
 %Restores previous cell to empty
         B.top(x_ori,y_ori).name      = [];
@@ -75,14 +102,14 @@ B.top(x,y) = B.top(x_ori,y_ori);
         B.top(x_ori,y_ori).himg      = [];
      
 B.info.turn = B.info.turn + 1;
+
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
 %-------------------------------------------------------------------------
 %This step officially moves the piece
-chessboard(p_x,p_y) = chessboard(ori_x,ori_y);
-piece_colour(p_x,p_y) = piece_colour(ori_x,ori_y);
 num_moves(p_x,p_y) = num_moves(ori_x,ori_y) + 1;
-
+piece_colour(p_x,p_y)= colourturn;
+ 
 %This step empties the previous box
 chessboard(ori_x,ori_y) = 0;
 piece_colour(ori_x,ori_y) = 0;

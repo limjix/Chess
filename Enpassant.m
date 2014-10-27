@@ -53,13 +53,27 @@ if value==1
 end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
-if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 && value==0
+if PM(p_x,p_y)==3 && value==0
 %--------------------------------------------------------------------------
 %                Moves Data in B.TOP & deletes previous cell
 %--------------------------------------------------------------------------
+
+%Moves Pawn
 B.top(x,y) = B.top(x_ori,y_ori);
 
-%Restores previous cell to empty
+%Coordinates of the captured piece
+if (piece_colour(ori_x,ori_y)==98)
+   del_x = [p_x+3 p_x-1];
+   del_y = [p_y+4 p_y];
+end
+   
+if (piece_colour(ori_x,ori_y)==119)    
+   del_x = [p_x+5 p_x+1];
+   del_y = [p_y+4 p_y];
+end
+        
+    
+%Restores original pawn cell to empty
         B.top(x_ori,y_ori).name      = [];
         B.top(x_ori,y_ori).colour     = 0;
         B.top(x_ori,y_ori).move      = [];
@@ -73,6 +87,21 @@ B.top(x,y) = B.top(x_ori,y_ori);
         B.top(x_ori,y_ori).type      = 'empty';
         B.top(x_ori,y_ori).image     = [];
         B.top(x_ori,y_ori).himg      = [];
+        
+%Restores captured pawn cell to empty
+        B.top(del_x(1),del_y(1)).name      = [];
+        B.top(del_x(1),del_y(1)).colour     = 0;
+        B.top(del_x(1),del_y(1)).move      = [];
+        B.top(del_x(1),del_y(1)).capture   = [];
+        B.top(del_x(1),del_y(1)).royal     = 0;
+        B.top(del_x(1),del_y(1)).init      = nan;
+        B.top(del_x(1),del_y(1)).promotion = nan;
+        B.top(del_x(1),del_y(1)).castle    = nan;
+        B.top(del_x(1),del_y(1)).immobile   = nan;
+        B.top(del_x(1),del_y(1)).protect   = nan;
+        B.top(del_x(1),del_y(1)).type      = 'empty';
+        B.top(del_x(1),del_y(1)).image     = [];
+        B.top(del_x(1),del_y(1)).himg      = [];        
      
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
@@ -87,6 +116,12 @@ num_moves(p_x,p_y) = num_moves(ori_x,ori_y) + 1;
 chessboard(ori_x,ori_y) = 0;
 piece_colour(ori_x,ori_y) = 0;
 num_moves(ori_x,ori_y) = 0;
+
+%This step deletes the capured piece
+chessboard(del_x(2),del_y(2)) = 0;
+piece_colour(del_x(2),del_y(2)) = 0;
+num_moves(del_x(2),del_y(2)) = 0;
+
 
 %-------------Analyses for potential checks & provides game stats---------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
