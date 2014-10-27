@@ -1,5 +1,5 @@
-%CapturePiece Part of the Click Series of Functions - Enables capture
-function [B]=capturepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+%Enpassant Enables frontend implementation of En Passant
+function [B]=Enpassant(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
 
 %--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ clickP = get(gca,'CurrentPoint');
       ori_y = y_ori - 4; %x_ori is for B.top
       
 %-------------------------------------------------------------------------
-%            Checks if King is exposed to check in any way
+%        Checks if King is exposed to check in any way due to move
 %-------------------------------------------------------------------------
 %The method used is to create a future chessboard based on the move
 %requested

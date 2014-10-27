@@ -4,15 +4,13 @@ function [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,potent
 r_colour = piece_colour(p_x,p_y);
 possiblemoves = zeros(8,8);
 
-<<<<<<< HEAD
 %This section allows all movements after checking whether it exceeds the board or not 
 %and ensures that the king is not moving into square that is in check ---------------
-=======
+
 %------------------------------------------------------------------------
 %                        Movement (8 Directions)
 %------------------------------------------------------------------------
 
->>>>>>> origin/master
     
     if(p_x+1<9)
         if (piece_colour(p_x+1,p_y)~= r_colour && chessboard(p_x+1,p_y)~=0)
@@ -106,7 +104,9 @@ possiblemoves = zeros(8,8);
 %-------------------------------------------------------------------------
 
 
-   %For white king 
+%---------------------------- For white king -----------------------------
+%Checks to see if traversed squares are in check and if the final square is
+%checked. Also checks if squares in between are empty
    if (piece_colour(p_x,p_y)==119 && num_moves(p_x,p_y)==0 && num_moves(8,8)==0..... 
            && piece_colour(8,6)==0 && piece_colour(8,7)==0 && potential_moves(8,6)==0.....  
            && potential_moves(8,7)==0)
@@ -116,9 +116,11 @@ possiblemoves = zeros(8,8);
            && piece_colour(8,2)==0 && piece_colour(8,3)==0 && piece_colour(8,4)==0.... 
            && potential_moves(8,3)==0 && potential_moves(8,4)==0)
        possiblemoves(8,3) = 4;
-   end    
-
-   %For black king     
+   end
+   
+%---------------------------- For black king -----------------------------
+%Checks to see if traversed squares are in check and if the final square is
+%checked
    if (piece_colour(p_x,p_y)==98 && num_moves(p_x,p_y)==0 && num_moves(1,1)==0..... 
            && piece_colour(1,2)==0 && piece_colour(1,3)==0 && piece_colour(1,4)==0..... 
            && potential_moves(1,3)==0 && potential_moves(1,4)==0)

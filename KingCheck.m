@@ -3,7 +3,7 @@
 function [value]=KingCheck(chessboard,piece_colour,colour, capt_index,potentialmoves)
 
 %-------------------- King In Check --------------------------------------
-king_index = find(chessboard == 10 & piece_colour == colour)
+king_index = find(chessboard == 10 & piece_colour == colour);
 kingincheck = ismember(king_index,capt_index);
 if(kingincheck)
     value = 1;

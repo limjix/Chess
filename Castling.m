@@ -1,5 +1,5 @@
-%CapturePiece Part of the Click Series of Functions - Enables capture
-function [B]=capturepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+%Castling Enables frontend implementation of castling
+function [B]=Castling(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
 
 %--------------------------------------------------------------------------
@@ -53,13 +53,40 @@ if value==1
 end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
-if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 && value==0
+if PM(p_x,p_y)==4 && value==0
 %--------------------------------------------------------------------------
 %                Moves Data in B.TOP & deletes previous cell
 %--------------------------------------------------------------------------
+%Moves King
 B.top(x,y) = B.top(x_ori,y_ori);
 
-%Restores previous cell to empty
+%Coordinate system is X_rook = [B.top Chessboard]
+if ( p_x == 8 && p_y == 7)
+    x_rook = [12 8]; %Initial Rook Position
+    y_rook = [12 8];
+    move_x = [12 8]; %Final Rook Position
+    move_y = [10 6];
+elseif ( p_x == 8 && p_y == 3 )
+    x_rook = [12 8];
+    y_rook = [5 1];
+    move_x = [12 8];
+    move_y = [8 4];
+elseif ( p_x == 1 && p_y == 7)
+    x_rook = [5 1];
+    y_rook = [12 8];
+    move_x = [5 1];
+    move_y = [10 6];
+elseif ( p_x == 1 && p_y == 3)
+    x_rook = [5 1];
+    y_rook = [5 1];
+    move_x = [5 1];
+    move_y = [8 4];
+end
+
+%Moves Rook
+B.top(move_x(1),move_y(1)) = B.top(x_rook(1),y_rook(1));
+
+%Restores King cell to empty
         B.top(x_ori,y_ori).name      = [];
         B.top(x_ori,y_ori).colour     = 0;
         B.top(x_ori,y_ori).move      = [];
@@ -73,11 +100,27 @@ B.top(x,y) = B.top(x_ori,y_ori);
         B.top(x_ori,y_ori).type      = 'empty';
         B.top(x_ori,y_ori).image     = [];
         B.top(x_ori,y_ori).himg      = [];
-     
+
+%Restores rook cell to empty
+        B.top(x_rook(1),y_rook(1)).name      = [];
+        B.top(x_rook(1),y_rook(1)).colour     = 0;
+        B.top(x_rook(1),y_rook(1)).move      = [];
+        B.top(x_rook(1),y_rook(1)).capture   = [];
+        B.top(x_rook(1),y_rook(1)).royal     = 0;
+        B.top(x_rook(1),y_rook(1)).init      = nan;
+        B.top(x_rook(1),y_rook(1)).promotion = nan;
+        B.top(x_rook(1),y_rook(1)).castle    = nan;
+        B.top(x_rook(1),y_rook(1)).immobile   = nan;
+        B.top(x_rook(1),y_rook(1)).protect   = nan;
+        B.top(x_rook(1),y_rook(1)).type      = 'empty';
+        B.top(x_rook(1),y_rook(1)).image     = [];
+        B.top(x_rook(1),y_rook(1)).himg      = [];
+        
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
 %-------------------------------------------------------------------------
+%--------------------------------King-------------------------------------
 %This step officially moves the piece
 chessboard(p_x,p_y) = chessboard(ori_x,ori_y);
 piece_colour(p_x,p_y) = piece_colour(ori_x,ori_y);
@@ -87,6 +130,17 @@ num_moves(p_x,p_y) = num_moves(ori_x,ori_y) + 1;
 chessboard(ori_x,ori_y) = 0;
 piece_colour(ori_x,ori_y) = 0;
 num_moves(ori_x,ori_y) = 0;
+
+%-------------------------------Rook--------------------------------------
+%This step officially moves the piece
+chessboard(move_x(2),move_y(2)) = chessboard(x_rook(2),y_rook(2));
+piece_colour(move_x(2),move_y(2)) = piece_colour(x_rook(2),y_rook(2));
+num_moves(move_x(2),move_y(2)) = num_moves(x_rook(2),y_rook(2)) + 1;
+
+%This step empties the previous box
+chessboard(x_rook(2),y_rook(2)) = 0;
+piece_colour(x_rook(2),y_rook(2)) = 0;
+num_moves(x_rook(2),y_rook(2)) = 0;
 
 %-------------Analyses for potential checks & provides game stats---------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);

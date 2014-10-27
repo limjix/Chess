@@ -56,6 +56,9 @@ nocapture = potentialmoves;
 nocapture(capt_index) = 0;
 num_moves_available = sum(sum(nocapture));
 
+%-------------------Checkmate or Stalemate--------------------------------
+
+
 
 
 end

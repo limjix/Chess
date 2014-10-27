@@ -1,5 +1,5 @@
-%CapturePiece Part of the Click Series of Functions - Enables capture
-function [B]=capturepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+%PawnPromo Enables Front End Implementation of Pawn Promo
+function [B]=PawnPromo(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
 
 %--------------------------------------------------------------------------
