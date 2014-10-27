@@ -1,14 +1,11 @@
-% create main figure window
-uih.f1 = figure('Name',mfilename,'Unit','normalized',...
-    'Position',[0.1729    0.1975    0.45 0.6292    ],'color','k',...
-    'NumberTitle','off','Menubar','none');
+% % create main figure window
+function mdp_chessboard(hdl)
 %GameType='Contemporary',
 B = BoardInitialization('Contemporary');
-
+uih.f1 = hdl;
 % ========================== BOARD GRAPHICS ==============================
 % clear the figure
 delete(findobj(uih.f1,'type','axes'))
-
 
 % obtain size of playable area (in squares)
 tmp = size(B.top)-B.info.pad;
@@ -39,8 +36,9 @@ axBoard = axes('color','none', ...
     'DataAspectRatio',[1 1 1],...
     'XColor',([194 207 214]-30)/225,'YColor',([194 207 214]-30)/225,...
     'Box','On','LineWidth',2,...
-    'Position',[0.05 0.10 0.650 0.815],...
+    'Position',[0.00 0.10 0.650 0.815],...
     'Tag','BoardAx');
+    
 title('Game State: play','color','w','fontsize',16,'fontweight','bold')
 % store axes handles
 hax = [axBoard];
@@ -102,4 +100,4 @@ for r=1:rows
     end
 end
 
-a=1;
+end
