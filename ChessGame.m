@@ -80,4 +80,4 @@ function startbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % create main figure window
 
-mdp_chessboard(handles.boardtop)
+mdp_chessboard(handles)
