@@ -1,6 +1,6 @@
 %Castling Enables frontend implementation of castling
 function [B]=Castling(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,varargin)
+    num_moves,parameters,PM,handles,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -49,7 +49,7 @@ f_num_moves(ori_x,ori_y) = 0;
 [value]=KingCheck(fboard,f_p_colour,colourturn,...
     capt_index_future,potentialfuturemoves);
 if value==1
-    disp('King will be left in check, move invalid')
+    msgbox('King will be left in check, move invalid')
 end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
@@ -146,7 +146,7 @@ num_moves(x_rook(2),y_rook(2)) = 0;
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [value]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if value == 1
-    disp('Check')
+    msgbox('Check')
 end
 
 %-------------------------------------------------------------------------
@@ -175,7 +175,7 @@ for r=1:parameters.rows
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
                 'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,...
-                num_moves,parameters,potentialmoves});
+                num_moves,parameters,potentialmoves,handles});
         end
     end
 end

@@ -1,11 +1,11 @@
 % % create main figure window
-function mdp_chessboard(hdl)
+function mdp_chessboard(handles)
 %GameType='Contemporary',
 B = BoardInitialization('Contemporary');
-uih.f1 = hdl;
+uih.f1 = handles.boardtop;
 % ========================== BOARD GRAPHICS ==============================
 % clear the figure
-delete(findobj(uih.f1,'type','axes'))
+delete(findobj('type','axes'))
 
 % obtain size of playable area (in squares)
 tmp = size(B.top)-B.info.pad;
@@ -87,7 +87,7 @@ for r=1:rows
             imHdls(r,c) = image(c+[0 1]-1,[rows-1 rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
                 'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,num_moves,...
-                parameters,potentialmoves,uih.f1,hlastmove,hax});
+                parameters,potentialmoves,handles,uih.f1,hlastmove,hax});
             % each image has a corresponding rules file, upload that file
             % path to the user data of this image
             set(imHdls(r,c),'UserData',B.top(r+B.info.pad/2,c+B.info.pad/2).rules)
