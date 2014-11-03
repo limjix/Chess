@@ -46,8 +46,7 @@ f_num_moves(ori_x,ori_y) = 0;
 %Analyses the future board
 [potentialfuturemoves,capt_index_future] = analyseboard(fboard,...
     f_p_colour,f_num_moves,oppositecolour);
-[value]=KingCheck(fboard,f_p_colour,colourturn,...
-    capt_index_future,potentialfuturemoves);
+[value]=KingCheck(fboard,f_p_colour,colourturn,B,num_moves);
 if value==1
     msgbox('King will be left in check, move invalid')
 end
