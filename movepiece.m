@@ -1,4 +1,3 @@
-
 %Movepiece Part of the Click Series of Functions - Enables movement
 function [B]=movepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,varargin)
@@ -46,7 +45,8 @@ f_num_moves(ori_x,ori_y) = 0;
 %Analyses the future board
 [potentialfuturemoves,capt_index_future] = analyseboard(fboard,...
     f_p_colour,f_num_moves,oppositecolour);
-[value]=KingCheck(fboard,f_p_colour,colourturn,B, num_moves);
+[value]=KingCheck(fboard,f_p_colour,colourturn,...
+    capt_index_future,potentialfuturemoves);
 if value==1
     disp('King will be left in check, move invalid')
 end
