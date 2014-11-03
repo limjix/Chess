@@ -1,7 +1,7 @@
 
 %Movepiece Part of the Click Series of Functions - Enables movement
 function [B]=movepiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,handles,varargin)
+    num_moves,parameters,PM,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -48,7 +48,7 @@ f_num_moves(ori_x,ori_y) = 0;
     f_p_colour,f_num_moves,oppositecolour);
 [value]=KingCheck(fboard,f_p_colour,colourturn,B, num_moves);
 if value==1
-    msgbox('King will be left in check, move invalid')
+    disp('King will be left in check, move invalid')
 end
 
 %-------------------------------------------------------------------------
@@ -93,7 +93,7 @@ num_moves(ori_x,ori_y) = 0;
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [value]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if value == 1
-    msgbox('Check')
+    disp('Check')
 end
 %-------------------------------------------------------------------------
 %                           Redraws the Board
@@ -122,7 +122,7 @@ for r=1:parameters.rows
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
                 'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,...
-                num_moves,parameters,potentialmoves,handles});
+                num_moves,parameters,potentialmoves});
         end
     end
 end
