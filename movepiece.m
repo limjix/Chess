@@ -48,7 +48,7 @@ f_num_moves(ori_x,ori_y) = 0;
 [value]=KingCheck(fboard,f_p_colour,colourturn,...
     capt_index_future,potentialfuturemoves);
 if value==1
-    msgbox('King will be left in check, move invalid')
+    disp('King will be left in check, move invalid')
 end
 
 %-------------------------------------------------------------------------
@@ -93,7 +93,7 @@ num_moves(ori_x,ori_y) = 0;
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [value]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if value == 1
-    msgbox('Check')
+    disp('Check')
 end
 %-------------------------------------------------------------------------
 %                           Redraws the Board

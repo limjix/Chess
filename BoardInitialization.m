@@ -433,6 +433,8 @@ B = UpdatePromLists(B);
 B.info.boxLim = BoxLim(B);
 % finally, track this game history
 B.info.hist = cellfun(@(x,y) [x num2str(y)],{B.top.name},{B.top.colour},'unifo',false);
+% Lists what colour AI is
+B.info.AIcolour = 98;
 
 end
 

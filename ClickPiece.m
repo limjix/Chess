@@ -11,7 +11,6 @@ else
     colourturn = 98;
     oppositecolour = 119;
 end
-
 %-------------------------------------------------------------------------
  clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
