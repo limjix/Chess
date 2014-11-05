@@ -1,5 +1,5 @@
 
-function [possiblemoves] = RookMovement(chessboard,piece_colour,p_x,p_y)
+function [possiblemoves] = MovementRook(chessboard,piece_colour,p_x,p_y)
 
 %Initialisation values --------------------------------------------------
 r_colour = piece_colour(p_x,p_y);

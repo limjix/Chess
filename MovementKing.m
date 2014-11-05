@@ -1,4 +1,4 @@
-function [possiblemoves] = KingMovement(chessboard,piece_colour,num_moves,potential_moves,p_x,p_y)
+function [possiblemoves] = MovementKing(chessboard,piece_colour,num_moves,potential_moves,p_x,p_y)
 
 %Initialisation values --------------------------------------------------
 r_colour = piece_colour(p_x,p_y);

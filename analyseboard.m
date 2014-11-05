@@ -17,22 +17,22 @@ for i=1:n_remaining
     %Based on the type of piece, its movement is calculated
     switch p_type
         case 1
-            [move] = PawnMovement(chessboard,piece_colour,num_moves,p_x(i),p_y(i));
+            [move] = MovementPawn(chessboard,piece_colour,num_moves,p_x(i),p_y(i));
             %disp('Pawn');
         case 5
-            [move] = RookMovement(chessboard,piece_colour,p_x(i),p_y(i));
+            [move] = MovementRook(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Rook');
         case 4
-            [move] = BishopMovement(chessboard,piece_colour,p_x(i),p_y(i));
+            [move] = MovementBishop(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Bishop');
         case 3
-            [move] = KnightMovement(chessboard,piece_colour,p_x(i),p_y(i));
+            [move] = MovementKnight(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Knight');
         case 9
-            [move] = QueenMovement(chessboard,piece_colour,p_x(i),p_y(i));
+            [move] = MovementQueen(chessboard,piece_colour,p_x(i),p_y(i));
             %disp('Queen');
         case 10
-            [move] = KingMovement(chessboard,piece_colour,num_moves,potentialmoves,p_x(i),p_y(i));
+            [move] = MovementKing(chessboard,piece_colour,num_moves,potentialmoves,p_x(i),p_y(i));
             %disp('King');
     end
     

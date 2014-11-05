@@ -1,4 +1,4 @@
-function [possiblemoves] = PawnMovement(chessboard,piece_colour,num_moves,p_x,p_y)
+function [possiblemoves] = MovementPawn(chessboard,piece_colour,num_moves,p_x,p_y)
 
 %Initialisation values --------------------------------------------------
 r_colour = piece_colour(p_x,p_y);

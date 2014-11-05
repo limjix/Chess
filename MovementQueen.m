@@ -1,4 +1,4 @@
-function [possiblemoves] = QueenMovement(chessboard,piece_colour,p_x,p_y)
+function [possiblemoves] = MovementQueen(chessboard,piece_colour,p_x,p_y)
 
 %Initialisation values --------------------------------------------------
 possiblemoves = zeros(8,8);

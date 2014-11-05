@@ -1,6 +1,6 @@
-%Enpassant Enables frontend implementation of En Passant
-function [B]=Enpassant(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,varargin)
+%Castling Enables frontend implementation of castling
+function [B]=ClickCastling(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+    num_moves,parameters,PM,handles,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -26,7 +26,7 @@ clickP = get(gca,'CurrentPoint');
       ori_y = y_ori - 4; %x_ori is for B.top
       
 %-------------------------------------------------------------------------
-%        Checks if King is exposed to check in any way due to move
+%            Checks if King is exposed to check in any way
 %-------------------------------------------------------------------------
 %The method used is to create a future chessboard based on the move
 %requested
@@ -49,31 +49,44 @@ f_num_moves(ori_x,ori_y) = 0;
 [value]=KingCheck(fboard,f_p_colour,colourturn,...
     capt_index_future,potentialfuturemoves);
 if value==1
-    disp('King will be left in check, move invalid')
+    msgbox('King will be left in check, move invalid')
 end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
-if PM(p_x,p_y)==3 && value==0
+if PM(p_x,p_y)==4 && value==0
 %--------------------------------------------------------------------------
 %                Moves Data in B.TOP & deletes previous cell
 %--------------------------------------------------------------------------
-
-%Moves Pawn
+%Moves King
 B.top(x,y) = B.top(x_ori,y_ori);
 
-%Coordinates of the captured piece
-if (piece_colour(ori_x,ori_y)==98)
-   del_x = [p_x+3 p_x-1];
-   del_y = [p_y+4 p_y];
+%Coordinate system is X_rook = [B.top Chessboard]
+if ( p_x == 8 && p_y == 7)
+    x_rook = [12 8]; %Initial Rook Position
+    y_rook = [12 8];
+    move_x = [12 8]; %Final Rook Position
+    move_y = [10 6];
+elseif ( p_x == 8 && p_y == 3 )
+    x_rook = [12 8];
+    y_rook = [5 1];
+    move_x = [12 8];
+    move_y = [8 4];
+elseif ( p_x == 1 && p_y == 7)
+    x_rook = [5 1];
+    y_rook = [12 8];
+    move_x = [5 1];
+    move_y = [10 6];
+elseif ( p_x == 1 && p_y == 3)
+    x_rook = [5 1];
+    y_rook = [5 1];
+    move_x = [5 1];
+    move_y = [8 4];
 end
-   
-if (piece_colour(ori_x,ori_y)==119)    
-   del_x = [p_x+5 p_x+1];
-   del_y = [p_y+4 p_y];
-end
-        
-    
-%Restores original pawn cell to empty
+
+%Moves Rook
+B.top(move_x(1),move_y(1)) = B.top(x_rook(1),y_rook(1));
+
+%Restores King cell to empty
         B.top(x_ori,y_ori).name      = [];
         B.top(x_ori,y_ori).colour     = 0;
         B.top(x_ori,y_ori).move      = [];
@@ -87,26 +100,27 @@ end
         B.top(x_ori,y_ori).type      = 'empty';
         B.top(x_ori,y_ori).image     = [];
         B.top(x_ori,y_ori).himg      = [];
+
+%Restores rook cell to empty
+        B.top(x_rook(1),y_rook(1)).name      = [];
+        B.top(x_rook(1),y_rook(1)).colour     = 0;
+        B.top(x_rook(1),y_rook(1)).move      = [];
+        B.top(x_rook(1),y_rook(1)).capture   = [];
+        B.top(x_rook(1),y_rook(1)).royal     = 0;
+        B.top(x_rook(1),y_rook(1)).init      = nan;
+        B.top(x_rook(1),y_rook(1)).promotion = nan;
+        B.top(x_rook(1),y_rook(1)).castle    = nan;
+        B.top(x_rook(1),y_rook(1)).immobile   = nan;
+        B.top(x_rook(1),y_rook(1)).protect   = nan;
+        B.top(x_rook(1),y_rook(1)).type      = 'empty';
+        B.top(x_rook(1),y_rook(1)).image     = [];
+        B.top(x_rook(1),y_rook(1)).himg      = [];
         
-%Restores captured pawn cell to empty
-        B.top(del_x(1),del_y(1)).name      = [];
-        B.top(del_x(1),del_y(1)).colour     = 0;
-        B.top(del_x(1),del_y(1)).move      = [];
-        B.top(del_x(1),del_y(1)).capture   = [];
-        B.top(del_x(1),del_y(1)).royal     = 0;
-        B.top(del_x(1),del_y(1)).init      = nan;
-        B.top(del_x(1),del_y(1)).promotion = nan;
-        B.top(del_x(1),del_y(1)).castle    = nan;
-        B.top(del_x(1),del_y(1)).immobile   = nan;
-        B.top(del_x(1),del_y(1)).protect   = nan;
-        B.top(del_x(1),del_y(1)).type      = 'empty';
-        B.top(del_x(1),del_y(1)).image     = [];
-        B.top(del_x(1),del_y(1)).himg      = [];        
-     
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
 %-------------------------------------------------------------------------
+%--------------------------------King-------------------------------------
 %This step officially moves the piece
 chessboard(p_x,p_y) = chessboard(ori_x,ori_y);
 piece_colour(p_x,p_y) = piece_colour(ori_x,ori_y);
@@ -117,11 +131,16 @@ chessboard(ori_x,ori_y) = 0;
 piece_colour(ori_x,ori_y) = 0;
 num_moves(ori_x,ori_y) = 0;
 
-%This step deletes the capured piece
-chessboard(del_x(2),del_y(2)) = 0;
-piece_colour(del_x(2),del_y(2)) = 0;
-num_moves(del_x(2),del_y(2)) = 0;
+%-------------------------------Rook--------------------------------------
+%This step officially moves the piece
+chessboard(move_x(2),move_y(2)) = chessboard(x_rook(2),y_rook(2));
+piece_colour(move_x(2),move_y(2)) = piece_colour(x_rook(2),y_rook(2));
+num_moves(move_x(2),move_y(2)) = num_moves(x_rook(2),y_rook(2)) + 1;
 
+%This step empties the previous box
+chessboard(x_rook(2),y_rook(2)) = 0;
+piece_colour(x_rook(2),y_rook(2)) = 0;
+num_moves(x_rook(2),y_rook(2)) = 0;
 
 %-------------Analyses for potential checks & provides game stats---------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
@@ -156,7 +175,7 @@ for r=1:parameters.rows
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
                 'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,...
-                num_moves,parameters,potentialmoves});
+                num_moves,parameters,potentialmoves,handles});
         end
     end
 end

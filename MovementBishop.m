@@ -1,4 +1,4 @@
-function [possiblemoves] = BishopMovement(chessboard,piece_colour,p_x,p_y)
+function [possiblemoves] = MovementBishop(chessboard,piece_colour,p_x,p_y)
 
 %Initialisation values --------------------------------------------------
 r_colour = piece_colour(p_x,p_y);
