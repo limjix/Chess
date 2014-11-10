@@ -60,14 +60,10 @@ B.info.turn = B.info.turn + 1;
 %              This is to edit the backend chessboard matrix
 %-------------------------------------------------------------------------
 %This step officially moves the piece
-chessboard(p_x,p_y) = chessboard(ori_x,ori_y);
-piece_colour(p_x,p_y) = piece_colour(ori_x,ori_y);
-num_moves(p_x,p_y) = num_moves(ori_x,ori_y) + 1;
+chessboard = fboard;
+piece_colour = f_p_colour; 
+num_moves = f_num_moves;
 
-%This step empties the previous box
-chessboard(ori_x,ori_y) = 0;
-piece_colour(ori_x,ori_y) = 0;
-num_moves(ori_x,ori_y) = 0;
 
 %-------------To Check Opposing Side -------------------------------------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
