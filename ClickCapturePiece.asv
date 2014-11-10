@@ -1,6 +1,6 @@
-%Movepiece Part of the Click Series of Functions - Enables movement
-function [B]=ClickMovePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,handles,onlyAIoption, varargin)
+%CapturePiece Part of the Click Series of Functions - Enables capture
+function [B]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+    num_moves,parameters,PM,handles,onlyAIoption,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -12,8 +12,7 @@ else
     colourturn = 98;
     oppositecolour = 119;
 end
-
-if onlyAIoption ==0
+if onlyAIoption == 0
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -21,10 +20,11 @@ clickP = get(gca,'CurrentPoint');
       x = 13-x;      
       y = y + 4;
 %--------Conversion from B.Top grid to Chessboard grid--------------------
-      p_x = x - 4;
+      p_x = x - 4; %p_x is necessary because it is the current clicked position
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
+end
 %-------------------------------------------------------------------------
 %            Checks if King is exposed to check in any way
 %-------------------------------------------------------------------------
@@ -51,16 +51,15 @@ f_num_moves(ori_x,ori_y) = 0;
 if value==1
     disp('King will be left in check, move invalid')
 end
-
 %-------------------------------------------------------------------------
-
-if PM(p_x,p_y)==1 && value==0 %Ensures it can only move legally
-    
+%Ensures it can only move legally
+if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 && value==0
 %--------------------------------------------------------------------------
 %                Moves Data in B.TOP & deletes previous cell
 %--------------------------------------------------------------------------
 B.top(x,y) = B.top(x_ori,y_ori);
 
+%Restores previous cell to empty
         B.top(x_ori,y_ori).name      = [];
         B.top(x_ori,y_ori).colour     = 0;
         B.top(x_ori,y_ori).move      = [];
@@ -74,9 +73,8 @@ B.top(x,y) = B.top(x_ori,y_ori);
         B.top(x_ori,y_ori).type      = 'empty';
         B.top(x_ori,y_ori).image     = [];
         B.top(x_ori,y_ori).himg      = [];
-        
+     
 B.info.turn = B.info.turn + 1;
-
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
 %-------------------------------------------------------------------------
@@ -93,11 +91,11 @@ num_moves(ori_x,ori_y) = 0;
 %-------------Analyses for potential checks & provides game stats---------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [value]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
-if value == 1 && onlyAIoption ==0
-    disp('Check')
+if value == 1
+   disp('Check')
 end
 
-if onlyAIoption ==0
+if onlyAIoption == 0
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
@@ -115,7 +113,6 @@ for i=1:71
          end
 end
 
-%------------------------------------------------------------------------
 for r=1:parameters.rows
     for c=1:parameters.cols
         if ~isempty(B.top(r+B.info.pad/2,c+B.info.pad/2).image)
@@ -130,7 +127,6 @@ for r=1:parameters.rows
     end
 end
 end
-
-%-------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------
 end
 end

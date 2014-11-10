@@ -1,6 +1,6 @@
 %CapturePiece Part of the Click Series of Functions - Enables capture
 function [B]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,handles,varargin)
+    num_moves,parameters,PM,handles,onlyAIoption,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -12,7 +12,7 @@ else
     colourturn = 98;
     oppositecolour = 119;
 end
-
+if onlyAIoption == 0
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -24,7 +24,7 @@ clickP = get(gca,'CurrentPoint');
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
-      
+end
 %-------------------------------------------------------------------------
 %            Checks if King is exposed to check in any way
 %-------------------------------------------------------------------------
@@ -91,10 +91,11 @@ num_moves(ori_x,ori_y) = 0;
 %-------------Analyses for potential checks & provides game stats---------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [value]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
-if value == 1
+if value == 1 && onlyAIoption == 0
    disp('Check')
 end
 
+if onlyAIoption == 0
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
@@ -124,6 +125,7 @@ for r=1:parameters.rows
                 num_moves,parameters,potentialmoves,handles});
         end
     end
+end
 end
 %---------------------------------------------------------------------------------------
 end

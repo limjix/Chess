@@ -1,6 +1,6 @@
 %Enpassant Enables frontend implementation of En Passant
 function [B]=ClickEnpassant(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,varargin)
+    num_moves,parameters,PM,onlyAIoption,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -13,6 +13,7 @@ else
     oppositecolour = 119;
 end
 
+if onlyAIoption ==0;
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -24,7 +25,7 @@ clickP = get(gca,'CurrentPoint');
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
-      
+end      
 %-------------------------------------------------------------------------
 %        Checks if King is exposed to check in any way due to move
 %-------------------------------------------------------------------------
@@ -130,6 +131,7 @@ if value == 1
     disp('Check')
 end
 
+if onlyAIoption ==0
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
@@ -159,6 +161,7 @@ for r=1:parameters.rows
                 num_moves,parameters,potentialmoves});
         end
     end
+end
 end
 %---------------------------------------------------------------------------------------
 end

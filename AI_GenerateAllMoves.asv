@@ -1,5 +1,5 @@
-%AI - Enables the computer to perform moves.
-function AI(B,chessboard,piece_colour,num_moves)
+%AI - Generates moves and stores them (Only for DATA Tree)
+function AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves)
 
 %-------------------------------------------------------------------------
 %                           Init Values
@@ -9,7 +9,8 @@ colour = B.info.AIcolour;
 %        Loop that generates all possible moves & evaluates them
 %-------------------------------------------------------------------------
 [p_x,p_y] = find(piece_colour == colour);
-n_remaining = length(boardpieces);
+n_remaining = length(p_x);
+statenumber = 0; %Provides a number to relocate the board state in structure
 
 %The loop should be 1 swift swoop
 %Generate possiblemoves, move each move, analyse, store
@@ -30,15 +31,10 @@ for i=1:n_remaining
             [move] = MovementKing(chessboard,piece_colour,num_moves,potentialmoves,p_x(i),p_y(i));
     end
     
-    ind_piece_moves = find(move==1)
-    n_ipm = length(boardpieces)
-    for j = 1:n_ipm
+%Individual Piece Moves
+     [move_x,move_y] = find(move == 1);
+     for j = 1:length(move_x)
         
 
-%-------------------------------------------------------------------------
-%                     Execution of best possible move
-%-------------------------------------------------------------------------
-
-%-------------------------------------------------------------------------
-%                           Redraw the Board
-%-------------------------------------------------------------------------
+     end
+            
