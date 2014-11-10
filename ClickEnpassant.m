@@ -1,6 +1,6 @@
 %Enpassant Enables frontend implementation of En Passant
-function [B]=ClickEnpassant(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,onlyAIoption,varargin)
+function [B,chessboard]=ClickEnpassant(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+    num_moves,parameters,PM, handles,onlyAIoption,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -13,7 +13,7 @@ else
     oppositecolour = 119;
 end
 
-if onlyAIoption ==0;
+if onlyAIoption == 0
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -25,7 +25,7 @@ clickP = get(gca,'CurrentPoint');
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
-end      
+end
 %-------------------------------------------------------------------------
 %        Checks if King is exposed to check in any way due to move
 %-------------------------------------------------------------------------
@@ -58,10 +58,6 @@ if PM(p_x,p_y)==3 && value==0
 %--------------------------------------------------------------------------
 %                Moves Data in B.TOP & deletes previous cell
 %--------------------------------------------------------------------------
-
-%Moves Pawn
-B.top(x,y) = B.top(x_ori,y_ori);
-
 %Coordinates of the captured piece
 if (piece_colour(ori_x,ori_y)==98)
    del_x = [p_x+3 p_x-1];
@@ -72,38 +68,7 @@ if (piece_colour(ori_x,ori_y)==119)
    del_x = [p_x+5 p_x+1];
    del_y = [p_y+4 p_y];
 end
-        
-    
-%Restores original pawn cell to empty
-        B.top(x_ori,y_ori).name      = [];
-        B.top(x_ori,y_ori).colour     = 0;
-        B.top(x_ori,y_ori).move      = [];
-        B.top(x_ori,y_ori).capture   = [];
-        B.top(x_ori,y_ori).royal     = 0;
-        B.top(x_ori,y_ori).init      = nan;
-        B.top(x_ori,y_ori).promotion = nan;
-        B.top(x_ori,y_ori).castle    = nan;
-        B.top(x_ori,y_ori).immobile   = nan;
-        B.top(x_ori,y_ori).protect   = nan;
-        B.top(x_ori,y_ori).type      = 'empty';
-        B.top(x_ori,y_ori).image     = [];
-        B.top(x_ori,y_ori).himg      = [];
-        
-%Restores captured pawn cell to empty
-        B.top(del_x(1),del_y(1)).name      = [];
-        B.top(del_x(1),del_y(1)).colour     = 0;
-        B.top(del_x(1),del_y(1)).move      = [];
-        B.top(del_x(1),del_y(1)).capture   = [];
-        B.top(del_x(1),del_y(1)).royal     = 0;
-        B.top(del_x(1),del_y(1)).init      = nan;
-        B.top(del_x(1),del_y(1)).promotion = nan;
-        B.top(del_x(1),del_y(1)).castle    = nan;
-        B.top(del_x(1),del_y(1)).immobile   = nan;
-        B.top(del_x(1),del_y(1)).protect   = nan;
-        B.top(del_x(1),del_y(1)).type      = 'empty';
-        B.top(del_x(1),del_y(1)).image     = [];
-        B.top(del_x(1),del_y(1)).himg      = [];        
-     
+            
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
@@ -131,7 +96,7 @@ if value == 1
     disp('Check')
 end
 
-if onlyAIoption ==0
+[B] = readchessboard(B,chessboard,piece_colour);
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
@@ -162,7 +127,7 @@ for r=1:parameters.rows
         end
     end
 end
-end
+
 %---------------------------------------------------------------------------------------
 end
 end

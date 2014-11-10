@@ -1,5 +1,5 @@
 %Castling Enables frontend implementation of castling
-function [B]=ClickCastling(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+function [B,chessboard]=ClickCastling(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,handles,onlyAIoption,varargin)
 
 %--------------------------------------------------------------------------
@@ -13,7 +13,6 @@ else
     oppositecolour = 119;
 end
 
-if onlyAIoption ==0
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -55,12 +54,10 @@ end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
 if PM(p_x,p_y)==4 && value==0
-%--------------------------------------------------------------------------
-%                Moves Data in B.TOP & deletes previous cell
-%--------------------------------------------------------------------------
-%Moves King
-B.top(x,y) = B.top(x_ori,y_ori);
 
+%-------------------------------------------------------------------------
+%                   B.top
+%-------------------------------------------------------------------------
 %Coordinate system is X_rook = [B.top Chessboard]
 if ( p_x == 8 && p_y == 7)
     x_rook = [12 8]; %Initial Rook Position
@@ -84,39 +81,6 @@ elseif ( p_x == 1 && p_y == 3)
     move_y = [8 4];
 end
 
-%Moves Rook
-B.top(move_x(1),move_y(1)) = B.top(x_rook(1),y_rook(1));
-
-%Restores King cell to empty
-        B.top(x_ori,y_ori).name      = [];
-        B.top(x_ori,y_ori).colour     = 0;
-        B.top(x_ori,y_ori).move      = [];
-        B.top(x_ori,y_ori).capture   = [];
-        B.top(x_ori,y_ori).royal     = 0;
-        B.top(x_ori,y_ori).init      = nan;
-        B.top(x_ori,y_ori).promotion = nan;
-        B.top(x_ori,y_ori).castle    = nan;
-        B.top(x_ori,y_ori).immobile   = nan;
-        B.top(x_ori,y_ori).protect   = nan;
-        B.top(x_ori,y_ori).type      = 'empty';
-        B.top(x_ori,y_ori).image     = [];
-        B.top(x_ori,y_ori).himg      = [];
-
-%Restores rook cell to empty
-        B.top(x_rook(1),y_rook(1)).name      = [];
-        B.top(x_rook(1),y_rook(1)).colour     = 0;
-        B.top(x_rook(1),y_rook(1)).move      = [];
-        B.top(x_rook(1),y_rook(1)).capture   = [];
-        B.top(x_rook(1),y_rook(1)).royal     = 0;
-        B.top(x_rook(1),y_rook(1)).init      = nan;
-        B.top(x_rook(1),y_rook(1)).promotion = nan;
-        B.top(x_rook(1),y_rook(1)).castle    = nan;
-        B.top(x_rook(1),y_rook(1)).immobile   = nan;
-        B.top(x_rook(1),y_rook(1)).protect   = nan;
-        B.top(x_rook(1),y_rook(1)).type      = 'empty';
-        B.top(x_rook(1),y_rook(1)).image     = [];
-        B.top(x_rook(1),y_rook(1)).himg      = [];
-        
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
@@ -149,6 +113,8 @@ num_moves(x_rook(2),y_rook(2)) = 0;
 if value == 1
     disp('Check')
 end
+
+[B] = readchessboard(B,chessboard,piece_colour);
 
 if onlyAIoption ==0
 %-------------------------------------------------------------------------

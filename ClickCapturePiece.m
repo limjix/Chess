@@ -1,5 +1,5 @@
 %CapturePiece Part of the Click Series of Functions - Enables capture
-function [B]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+function [B,chessboard]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,handles,onlyAIoption,varargin)
 
 %--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ else
     colourturn = 98;
     oppositecolour = 119;
 end
-if onlyAIoption == 0
+
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -24,7 +24,7 @@ clickP = get(gca,'CurrentPoint');
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
-end
+
 %-------------------------------------------------------------------------
 %            Checks if King is exposed to check in any way
 %-------------------------------------------------------------------------
@@ -54,26 +54,7 @@ end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
 if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 && value==0
-%--------------------------------------------------------------------------
-%                Moves Data in B.TOP & deletes previous cell
-%--------------------------------------------------------------------------
-B.top(x,y) = B.top(x_ori,y_ori);
 
-%Restores previous cell to empty
-        B.top(x_ori,y_ori).name      = [];
-        B.top(x_ori,y_ori).colour     = 0;
-        B.top(x_ori,y_ori).move      = [];
-        B.top(x_ori,y_ori).capture   = [];
-        B.top(x_ori,y_ori).royal     = 0;
-        B.top(x_ori,y_ori).init      = nan;
-        B.top(x_ori,y_ori).promotion = nan;
-        B.top(x_ori,y_ori).castle    = nan;
-        B.top(x_ori,y_ori).immobile   = nan;
-        B.top(x_ori,y_ori).protect   = nan;
-        B.top(x_ori,y_ori).type      = 'empty';
-        B.top(x_ori,y_ori).image     = [];
-        B.top(x_ori,y_ori).himg      = [];
-     
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
 %              This is to edit the backend chessboard matrix
@@ -95,7 +76,8 @@ if value == 1 && onlyAIoption == 0
    disp('Check')
 end
 
-if onlyAIoption == 0
+[B] = readchessboard(B,chessboard,piece_colour);
+
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
@@ -126,7 +108,7 @@ for r=1:parameters.rows
         end
     end
 end
-end
+
 %---------------------------------------------------------------------------------------
 end
 end

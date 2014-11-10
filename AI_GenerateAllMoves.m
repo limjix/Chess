@@ -32,9 +32,12 @@ for i=1:n_remaining
     end
     
 %Individual Piece Moves
-     [move_x,move_y] = find(move == 1);
-     for j = 1:length(move_x)
-        
+     [move_x,move_y] = find(move == 1)
+%      for j = 1:length(move_x)
+%         
+% 
+%      end
 
-     end
+end
+end
             
