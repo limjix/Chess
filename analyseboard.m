@@ -42,23 +42,15 @@ end
 %-------------------------------------------------------------------------
 %                     Analysis of potentialmoves
 %-------------------------------------------------------------------------
-%--------------------- Piece Analysis ------------------------------------
-
-
 %-------------------Capture Analysis--------------------------------------
 potentialcaptures = potentialmoves ~= 0 & chessboard~= 0;
 capt_index = find(potentialcaptures==1);
-num_pot_capture = length(capt_index);
-capt_value_sum = sum(chessboard(capt_index));
+%num_pot_capture = length(capt_index);
+%capt_value_sum = sum(chessboard(capt_index));
 
 %------------------ Moves Analysis ---------------------------------------
-nocapture = potentialmoves;
-nocapture(capt_index) = 0;
-num_moves_available = sum(sum(nocapture));
-
-%-------------------Checkmate or Stalemate--------------------------------
-
-
-
+%nocapture = potentialmoves;
+%nocapture(capt_index) = 0;
+%num_moves_available = sum(sum(nocapture));
 
 end

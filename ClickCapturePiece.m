@@ -1,6 +1,6 @@
 %CapturePiece Part of the Click Series of Functions - Enables capture
-function [B,chessboard]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,handles,onlyAIoption,varargin)
+function [chessboard,piece_colour, num_moves,ccaptureval,allowscheck]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+    num_moves,parameters,PM,handles,onlyAIoption,move_x,move_y,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -13,6 +13,7 @@ else
     oppositecolour = 119;
 end
 
+if onlyAIoption == 0
 clickP = get(gca,'CurrentPoint');
       x = ceil(clickP(1,2));
       y = ceil(clickP(1,1));
@@ -24,7 +25,14 @@ clickP = get(gca,'CurrentPoint');
       p_y = y - 4;
       ori_x = x_ori - 4; %The difference is that ori_x is for chessboard,
       ori_y = y_ori - 4; %x_ori is for B.top
-
+else
+    p_x = move_x;   %Where is it moving to
+    p_y = move_y;
+    ori_x = x_ori;   %Where was it originally
+    ori_y = y_ori;
+end
+      
+ccaptureval = chessboard(p_x,p_y);      
 %-------------------------------------------------------------------------
 %            Checks if King is exposed to check in any way
 %-------------------------------------------------------------------------
@@ -46,14 +54,14 @@ f_num_moves(ori_x,ori_y) = 0;
 %Analyses the future board
 [potentialfuturemoves,capt_index_future] = analyseboard(fboard,...
     f_p_colour,f_num_moves,oppositecolour);
-[value]=KingCheck(fboard,f_p_colour,colourturn,...
+[allowscheck]=KingCheck(fboard,f_p_colour,colourturn,...
     capt_index_future,potentialfuturemoves);
-if value==1
+if allowscheck==1 && onlyAIoption == 0
     disp('King will be left in check, move invalid')
 end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
-if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 && value==0
+if PM(p_x,p_y)==2 && chessboard(p_x,p_y) ~= 10 && allowscheck==0
 
 B.info.turn = B.info.turn + 1;
 %-------------------------------------------------------------------------
@@ -67,13 +75,14 @@ num_moves = f_num_moves;
 
 %-------------To Check Opposing Side -------------------------------------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
-[value]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
-if value == 1 && onlyAIoption == 0
+[checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
+if checkopp == 1 && onlyAIoption == 0
    disp('Check')
 end
 
 [B] = readchessboard(B,chessboard,piece_colour);
 
+if onlyAIoption == 0
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
@@ -104,7 +113,7 @@ for r=1:parameters.rows
         end
     end
 end
-
+end
 %---------------------------------------------------------------------------------------
 end
 end
