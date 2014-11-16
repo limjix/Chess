@@ -39,11 +39,13 @@ opp_capt_value_sum = sum(chessboard(opp_capt_index));
 
 %--------------------- Promotion? ----------------------------------------
 
+%--------------------- How Far is pawn from end board?--------------------
+
 %------------------ Gain Factor ------------------------------------------
 gainCurrentCapture = 1; %Encourages AI to seize captures immediately
 gainCapture = 1;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 1; %Encourages AI to position such that it opens space for other pieces
-gainThreats = -5; %Discourages AI to make moves that will lead to threats
+gainThreats = -1; %Discourages AI to make moves that will lead to threats
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
          + gainMoves * num_moves_available... 

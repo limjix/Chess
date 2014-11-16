@@ -132,7 +132,10 @@ for r=1:parameters.rows
     end
 end
 end
-
+global B
+global chessboard
+global piece_colour
+global num_moves
 end
 %-------------------------------------------------------------------------
 %-------------------------------------------------------------------------

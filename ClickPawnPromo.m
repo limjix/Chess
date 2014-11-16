@@ -109,9 +109,8 @@ if checkopp == 1 && onlyAIoption == 0
     disp('Check')
 end
 
-[B] = readchessboard(B,chessboard,piece_colour);
-
 if onlyAIoption == 0
+    [B] = readchessboard(B,chessboard,piece_colour);
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------

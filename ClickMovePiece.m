@@ -74,7 +74,6 @@ chessboard = fboard;
 piece_colour = f_p_colour; 
 num_moves = f_num_moves;
 
-
 %-------------Analyses for potential checks & provides game stats---------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
@@ -82,11 +81,9 @@ if checkopp == 1 && onlyAIoption ==0
     disp('Check')
 end
 
-%-----------Reads Chessboard and converts it to B.top---------------------
-[B] = readchessboard(B,chessboard,piece_colour);
-
 %-------------------------------------------------------------------------
 if onlyAIoption == 0
+    [B] = readchessboard(B,chessboard,piece_colour);
 %-------------------------------------------------------------------------
 %                           Redraws the Board
 %-------------------------------------------------------------------------
