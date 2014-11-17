@@ -4,7 +4,6 @@ function [boardscore,bchessboard,bpiece_colour,bnum_moves]=...
 %-------------------------------------------------------------------------
 %                           Init Values
 %-------------------------------------------------------------------------
-
 TmpB = B;
 
 if(mod(TmpB.info.turn,2)==1)
@@ -59,29 +58,25 @@ for i=1:n_remaining
 %-------------------------------------------------------------------------
      [move_x,move_y] = find(move ~= 0);
      n_move = length(move_x);
-     pruneflag = 0; %To fix error
+     pruneflag = 0;
 %This loop generates all the game states from 1 piece
      for j = 1:n_move
          switch move(move_x(j),move_y(j))
              case 1
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickMovePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
              case 2
                  [pchessboard, ppiece_colour, pnum_moves,ccaptureval,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j))
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
              case 3
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickEnpassant(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move, 0,1,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move, 0,1,move_x(j),move_y(j));
              case 4
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickCastling(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
              case 5
                  [pchessboard,ppiece_colour, pnum_moves,kingincheck]=ClickPawnPromo(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,parameters,PM,handles,onlyAIoption,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
          end
 %--------A node has been generated, what do you want to do with it?--------
          if kingincheck  
@@ -90,8 +85,18 @@ for i=1:n_remaining
                  %Generate another layer with recursive parameters
                  [boardscore,bchessboard,bpiece_colour,bnum_moves]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
+                alpha = max(alpha,boardscore);
+                boardscore = alpha;
+                if alpha>beta
+                    pruneflag = 1;
+                    disp('break')
+                    break
+                end
          end
 %--------------------------------------------------------------------------
+     end
+     if pruneflag
+         break
      end
 end
 %=========================================================================
@@ -131,29 +136,26 @@ for i=1:n_remaining
 %-------------------------------------------------------------------------
      [move_x,move_y] = find(move ~= 0);
      n_move = length(move_x);
-     pruneflag = 0; %To Fix error
+     pruneflag = 0;
 %This loop generates all the game states from 1 piece
      for j = 1:n_move
          switch move(move_x(j),move_y(j))
              case 1
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickMovePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
              case 2
                  [pchessboard, ppiece_colour, pnum_moves,ccaptureval,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j))
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
              case 3
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickEnpassant(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move, 0,1,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move, 0,1,move_x(j),move_y(j));
              case 4
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickCastling(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
              case 5
                  [pchessboard,ppiece_colour, pnum_moves,kingincheck]=ClickPawnPromo(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,parameters,PM,handles,onlyAIoption,move_x(j),move_y(j))
-                 ccaptureval = 0;
+                     num_moves,0,move,0,1,move_x(j),move_y(j));
+
          end
 %--------A node has been generated, what do you want to do with it?--------
          if kingincheck  
@@ -162,7 +164,17 @@ for i=1:n_remaining
                  %Generate another layer with recursive parameters
                  [boardscore,bchessboard,bpiece_colour,bnum_moves]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
+                beta = min(boardscore,beta);
+                boardscore = beta;
+                if alpha>beta
+                    pruneflag = 1;
+                    disp('break')
+                    break
+                end
          end
+     end
+      if pruneflag
+         break
      end
 %--------------------------------------------------------------------------
 end
