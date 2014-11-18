@@ -18,7 +18,7 @@ TmpB.info.turn = TmpB.info.turn +1;
 %-------------------------------------------------------------------------
 
 if depth == 0
-  [boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,colour,0);
+  [boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,colour);
   bchessboard = chessboard;
   bpiece_colour = piece_colour;
   bnum_moves = num_moves;
@@ -76,20 +76,30 @@ for i=1:n_remaining
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 5
                  [pchessboard,ppiece_colour, pnum_moves,kingincheck]=ClickPawnPromo(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j));
+                     num_moves,0,move,0,1,move_x(j),move_y(j),'queen');
          end
 %--------A node has been generated, what do you want to do with it?--------
          if kingincheck  
              %ignore because move not valid
          else
                  %Generate another layer with recursive parameters
-                 [boardscore,bchessboard,bpiece_colour,bnum_moves]=...
+                 [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
                 alpha = max(alpha,boardscore);
-                boardscore = alpha;
+                if alpha == boardscore
+                    bchessboard = pchessboard;
+                    bpiece_colour = ppiece_colour;
+                    bnum_moves = pnum_moves;
+                else
+                    if ~exist('bchessboard','var')
+                        bchessboard = pchessboard;
+                        bpiece_colour = ppiece_colour;
+                        bnum_moves = pnum_moves;
+                    end
+                end
+                boardscore = alpha; %exports Alpha
                 if alpha>beta
                     pruneflag = 1;
-                    disp('break')
                     break
                 end
          end
@@ -154,7 +164,7 @@ for i=1:n_remaining
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 5
                  [pchessboard,ppiece_colour, pnum_moves,kingincheck]=ClickPawnPromo(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j));
+                     num_moves,0,move,0,1,move_x(j),move_y(j),'queen');
 
          end
 %--------A node has been generated, what do you want to do with it?--------
@@ -162,13 +172,23 @@ for i=1:n_remaining
              %ignore because move not valid
          else
                  %Generate another layer with recursive parameters
-                 [boardscore,bchessboard,bpiece_colour,bnum_moves]=...
+                 [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
                 beta = min(boardscore,beta);
+                if beta == boardscore
+                    bchessboard = pchessboard;
+                    bpiece_colour = ppiece_colour;
+                    bnum_moves = pnum_moves;
+                else
+                    if ~exist('bchessboard','var')
+                        bchessboard = pchessboard;
+                        bpiece_colour = ppiece_colour;
+                        bnum_moves = pnum_moves;
+                    end
+                end
                 boardscore = beta;
                 if alpha>beta
                     pruneflag = 1;
-                    disp('break')
                     break
                 end
          end

@@ -100,6 +100,10 @@ num_moves(del_x(2),del_y(2)) = 0;
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if checkopp == 1 && onlyAIoption == 0
     disp('Check')
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Checkmate')
+    end
 end
 
 if onlyAIoption == 0
@@ -130,7 +134,7 @@ for r=1:parameters.rows
             imHdls(r,c) = image(c+[0 1]-1,[parameters.rows-1 parameters.rows]-r+1,...
                 mirrorImage(X),'AlphaData',mirrorImage(alpha),...
                 'ButtonDownFcn',{@ClickPiece,B,piece_colour,chessboard,...
-                num_moves,parameters,potentialmoves});
+                num_moves,parameters,potentialmoves,handles});
         end
     end
 end

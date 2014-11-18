@@ -78,6 +78,11 @@ num_moves = f_num_moves;
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if checkopp == 1 && onlyAIoption == 0
    disp('Check')
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Checkmate')
+    end
+
 end
 
 if onlyAIoption == 0

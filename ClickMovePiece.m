@@ -77,8 +77,13 @@ num_moves = f_num_moves;
 %-------------Analyses for potential checks & provides game stats---------
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
+
 if checkopp == 1 && onlyAIoption ==0
     disp('Check')
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Checkmate')
+    end
 end
 
 %-------------------------------------------------------------------------
