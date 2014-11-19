@@ -120,6 +120,11 @@ for r=1:parameters.rows
         end
     end
 end
+%----------------------- Pass to Game Control ----------------------------
+GameControl(B,piece_colour,chessboard,num_moves,...
+                parameters,handles,uih.f1,hlastmove,hax)
+%-------------------------------------------------------------------------
+
 end
 %-------------------------------------------------------------------------
 end
