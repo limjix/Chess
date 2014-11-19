@@ -32,7 +32,7 @@ if maxormin == 1  %Maximizing Player
 [p_x,p_y] = find(piece_colour == colour);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
-
+previousboardscore = -999;
 %In essence, we are going through each piece, looking at it's possible
 %moves, make those possible moves, evaluate, save bestboard.
 for i=1:n_remaining
@@ -85,19 +85,17 @@ for i=1:n_remaining
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
-                alpha = max(alpha,boardscore);
-                if alpha == boardscore
+        
+                if boardscore > previousboardscore
+                    previousboardscore = boardscore;
                     bchessboard = pchessboard;
                     bpiece_colour = ppiece_colour;
                     bnum_moves = pnum_moves;
-                else
-                    if ~exist('bchessboard','var')
-                        bchessboard = pchessboard;
-                        bpiece_colour = ppiece_colour;
-                        bnum_moves = pnum_moves;
-                    end
                 end
-                boardscore = alpha; %exports Alpha
+                if boardscore>alpha
+                    alpha = boardscore;
+                end
+
                 if alpha>beta
                     pruneflag = 1;
                     break
@@ -120,7 +118,7 @@ elseif maxormin == -1 %Minimizing Player
 [p_x,p_y] = find(piece_colour == colour);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
-
+previousboardscore = 999;
 %In essence, we are going through each piece, looking at it's possible
 %moves, make those possible moves, evaluate, save bestboard.
 for i=1:n_remaining
@@ -174,19 +172,16 @@ for i=1:n_remaining
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
-                beta = min(boardscore,beta);
-                if beta == boardscore
+                if boardscore < previousboardscore
+                    previousboardscore = boardscore;
                     bchessboard = pchessboard;
                     bpiece_colour = ppiece_colour;
                     bnum_moves = pnum_moves;
-                else
-                    if ~exist('bchessboard','var')
-                        bchessboard = pchessboard;
-                        bpiece_colour = ppiece_colour;
-                        bnum_moves = pnum_moves;
-                    end
                 end
-                boardscore = beta;
+                if boardscore<beta
+                    beta = boardscore;
+                end
+
                 if alpha>beta
                     pruneflag = 1;
                     break

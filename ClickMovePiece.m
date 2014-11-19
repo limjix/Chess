@@ -120,6 +120,9 @@ for r=1:parameters.rows
         end
     end
 end
+drawnow;
+AIControl(B,piece_colour,chessboard,num_moves,parameters, handles)
+
 end
 %-------------------------------------------------------------------------
 end
