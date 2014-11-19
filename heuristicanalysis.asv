@@ -1,5 +1,5 @@
 
-function [boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,currentcolour)
+function [boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,currentcolour,ccaptureval)
 %Colour should be the side in which it is being analysed for
 
 %Generates potential moves of the currently investigated game state
@@ -40,7 +40,7 @@ own_piece_sum = sum(chessboard(piece_index));
 
 %------------------ Number of opponent pieces ----------------------------
 %A move is good if it decreases the no of opponents pieces.
-opp_piece_index = find(piece_colour==oppcolour);
+opp_piece_index = find(piece_colour==oppcolour)
 opp_piece_sum = sum(chessboard(opp_piece_index)); 
 
 %------------------- Control of centre space -----------------------------
@@ -65,6 +65,7 @@ end_dist = end_dist-1;
 
 
 %------------------ Gain Factor ------------------------------------------
+gainCurrentCapture = 1; %Encourages AI to seize captures immediately
 gainCapture = 1;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 1; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -1; %Discourages AI to make moves that will lead to threats
@@ -75,13 +76,7 @@ gainOwnprom =1;
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
          + gainMoves * num_moves_available... 
-<<<<<<< HEAD
          + gainThreats * opp_capt_value_sum...
-         + gainCurrentCapture * ccaptureval...
-         + gainOpppieces * opp_piece_sum...
-         + gainOwnpieces * own_piece_sum...
-         + gainCentre * centre_space_sum;
-=======
-         + gainThreats * opp_capt_value_sum;
->>>>>>> origin/master
+         + gainCurrentCapture * ccaptureval;
+         + gain
 end

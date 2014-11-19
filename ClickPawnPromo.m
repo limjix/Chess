@@ -1,6 +1,6 @@
 %PawnPromo Enables Front End Implementation of Pawn Promo
 function [chessboard,piece_colour, num_moves,allowscheck]=ClickPawnPromo(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
-    num_moves,parameters,PM,handles,onlyAIoption,move_x,move_y,varargin)
+    num_moves,parameters,PM,handles,onlyAIoption,move_x,move_y,promo,varargin)
 
 %--------------------------------------------------------------------------
 %                  Init values,conversions and click location
@@ -67,12 +67,12 @@ if PM(p_x,p_y)==5 && allowscheck==0
 %                Moves Data in B.TOP & deletes previous cell
 %--------------------------------------------------------------------------
 %Allows user to input desired piece. Checks legality.
+if ~onlyAIoption
 disp('Pawn has been promoted');
-            flags=0
+            flags=0;
           while(flags==0)
               flags=1;
-              pawn_prom = input('Please enter a valid piece name\n','s')
-              
+              pawn_prom = input('Please enter a valid piece name\n','s')          
             switch pawn_prom
                 case 'rook'
                     chessboard(p_x,p_y)= 5;
@@ -87,6 +87,18 @@ disp('Pawn has been promoted');
                     flags=0;
             end   
           end
+else
+            switch promo
+                        case 'rook'
+                            chessboard(p_x,p_y)= 5;
+                        case 'queen'
+                            chessboard(p_x,p_y)= 9;
+                        case 'knight'
+                            chessboard(p_x,p_y)= 3;
+                        case 'bishop'
+                            chessboard(p_x,p_y)= 4;
+            end   
+end
 
 B.info.turn = B.info.turn + 1;
 
@@ -107,6 +119,10 @@ num_moves(ori_x,ori_y) = 0;
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if checkopp == 1 && onlyAIoption == 0
     disp('Check')
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Checkmate')
+    end
 end
 
 if onlyAIoption == 0
@@ -141,6 +157,8 @@ for r=1:parameters.rows
         end
     end
 end
+drawnow;
+AIControl(B,piece_colour,chessboard,num_moves,parameters, handles)
 end
 %---------------------------------------------------------------------------------------
 end

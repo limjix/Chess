@@ -119,6 +119,10 @@ num_moves(x_rook(2),y_rook(2)) = 0;
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if checkopp == 1 && onlyAIoption == 0
     disp('Check')
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Checkmate')
+    end
 end
 
 if onlyAIoption ==0
@@ -153,6 +157,8 @@ for r=1:parameters.rows
         end
     end
 end
+drawnow;
+AIControl(B,piece_colour,chessboard,num_moves,parameters, handles)
 end
 %---------------------------------------------------------------------------------------
 end
