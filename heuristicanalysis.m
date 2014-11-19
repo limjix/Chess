@@ -33,22 +33,52 @@ num_moves_available = sum(sum(nocapture));
 opp_num_pot_capture = length(opp_capt_index);
 opp_capt_value_sum = sum(chessboard(opp_capt_index)); 
 
+%------------------ Number of own pieces ---------------------------------
+%A move is good if it prevents the number of own pieces from decreasing.
+piece_index = find(piece_colour==currentcolour);
+own_piece_sum = sum(chessboard(piece_index)); 
+
+%------------------ Number of opponent pieces ----------------------------
+%A move is good if it decreases the no of opponents pieces.
+opp_piece_index = find(piece_colour==oppcolour);
+opp_piece_sum = sum(chessboard(opp_piece_index)); 
+
+%------------------- Control of centre space -----------------------------
+%A move is good if it increases control of the centre of the board
+centre_piece=zeros(8,8);
+centre_piece([28 29 36 37])=chessboard([28 29 36 37]);
+centre_piece = centre_piece~=0;
+centre_space_sum =  sum(centre_piece(piece_index));
+
+%------------------------- King's Safety ---------------------------------
+
 %------------------- Opponent's King Checked? ----------------------------
 
 %--------------------- Checkmate?-----------------------------------------
 
-%--------------------- Promotion? ----------------------------------------
+%--------------------- Possibility of own promotion? ---------------------
+%A move is good if it brings own pawn closer to the end of the board for promotion.
+pawn_pos = chessboard==1 & piece_colour==currentcolour;
+pawn_index = find(pawn_pos==1);
+end_dist = rem(pawn_index, 8);
+end_dist = end_dist-1;
 
-%--------------------- How Far is pawn from end board?--------------------
 
 %------------------ Gain Factor ------------------------------------------
 gainCurrentCapture = 1; %Encourages AI to seize captures immediately
 gainCapture = 1;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 1; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -1; %Discourages AI to make moves that will lead to threats
+gainOpppieces = -1; %Discourages AI from making moves that do not decrease opponents pieces
+gainOwnpieces = 1; %Discourages AI from making moves that decrease own pieces
+gainCentre = 1; %Encourages AI to increase control of centre space
+gainOwnprom =1;
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
          + gainMoves * num_moves_available... 
          + gainThreats * opp_capt_value_sum...
-         + gainCurrentCapture * ccaptureval;
+         + gainCurrentCapture * ccaptureval...
+         + gainOpppieces * opp_piece_sum...
+         + gainOwnpieces * own_piece_sum...
+         + gainCentre * centre_space_sum;
 end
