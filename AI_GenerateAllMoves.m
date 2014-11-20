@@ -81,25 +81,32 @@ for i=1:n_remaining
 %--------A node has been generated, what do you want to do with it?--------
          if kingincheck  
              %ignore because move not valid
+             if ~exist('boardscore','var')
+             boardscore = -999;
+             bchessboard = 0;
+             bpiece_colour =0;
+             bnum_moves =0;
+             end
          else
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
-        
-                if boardscore > previousboardscore
-                    previousboardscore = boardscore;
-                    bchessboard = pchessboard;
-                    bpiece_colour = ppiece_colour;
-                    bnum_moves = pnum_moves;
-                end
-                if boardscore>alpha
-                    alpha = boardscore;
-                end
-
-                if alpha>beta
-                    pruneflag = 1;
-                    break
-                end
+    
+                    if boardscore > previousboardscore
+                        previousboardscore = boardscore;
+                        bchessboard = pchessboard;
+                        bpiece_colour = ppiece_colour;
+                        bnum_moves = pnum_moves;
+                    end
+                    if boardscore>alpha
+                        alpha = boardscore;
+                    end
+            disp([depth alpha beta boardscore i j n_remaining n_move])
+                    if alpha>beta
+                        pruneflag = 1;
+                        disp('betacut')
+                        break
+                    end
          end
 %--------------------------------------------------------------------------
      end
@@ -168,10 +175,17 @@ for i=1:n_remaining
 %--------A node has been generated, what do you want to do with it?--------
          if kingincheck  
              %ignore because move not valid
+             if ~exist('boardscore','var')
+             boardscore = -999;
+             bchessboard = 0;
+             bpiece_colour =0;
+             bnum_moves =0;
+             end
          else
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
+        
                 if boardscore < previousboardscore
                     previousboardscore = boardscore;
                     bchessboard = pchessboard;
@@ -181,9 +195,10 @@ for i=1:n_remaining
                 if boardscore<beta
                     beta = boardscore;
                 end
-
+disp([depth alpha beta boardscore i j n_remaining n_move])
                 if alpha>beta
                     pruneflag = 1;
+                    disp('alphacut')
                     break
                 end
          end

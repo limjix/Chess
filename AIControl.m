@@ -5,16 +5,19 @@ function AIControl(B,piece_colour,chessboard,...
 %-------------------------------------------------------------------------
 %                       Init Values
 %-------------------------------------------------------------------------
-
-
+[ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+if ischeckmate
+    return
+end
 %-------------------------------------------------------------------------
 disp('Thinking Really Hard')
 
 %Produces AI's decision
 tic
 [~,chessboard,piece_colour,num_moves]=...
-    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,4,1,-999,999);
+    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,2,1,-999,999);
 toc
+
 %Translates the results into B.top
 [B] = readchessboard(B,chessboard,piece_colour);
 
