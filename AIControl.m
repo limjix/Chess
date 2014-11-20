@@ -1,7 +1,7 @@
 function AIControl(B,piece_colour,chessboard,...
                 num_moves,parameters, handles)
 %AIControl Enables AI to be in action
-
+[boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,119)
 %-------------------------------------------------------------------------
 %                       Init Values
 %-------------------------------------------------------------------------
@@ -11,13 +11,15 @@ if ischeckmate
 end
 %-------------------------------------------------------------------------
 disp('Thinking Really Hard')
-
+if B.info.turn ==2 
+    [chessboard,piece_colour,num_moves] = OpeningMoves(B,chessboard,piece_colour, num_moves);
+else
 %Produces AI's decision
 tic
-[~,chessboard,piece_colour,num_moves]=...
+[boardscore,chessboard,piece_colour,num_moves]=...
     AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,2,1,-999,999);
 toc
-
+end
 %Translates the results into B.top
 [B] = readchessboard(B,chessboard,piece_colour);
 

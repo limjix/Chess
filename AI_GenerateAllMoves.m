@@ -30,6 +30,9 @@ if maxormin == 1  %Maximizing Player
 %        Loop that generates all possible moves
 %-------------------------------------------------------------------------
 [p_x,p_y] = find(piece_colour == colour);
+perm_index = randperm(length(p_x));
+p_x = p_x(perm_index);
+p_y = p_y(perm_index);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
 previousboardscore = -999;
@@ -101,10 +104,9 @@ for i=1:n_remaining
                     if boardscore>alpha
                         alpha = boardscore;
                     end
-            disp([depth alpha beta boardscore i j n_remaining n_move])
+%             disp([depth alpha beta boardscore previousboardscore i j n_remaining n_move])
                     if alpha>beta
                         pruneflag = 1;
-                        disp('betacut')
                         break
                     end
          end
@@ -123,6 +125,9 @@ elseif maxormin == -1 %Minimizing Player
 %        Loop that generates all possible moves
 %-------------------------------------------------------------------------
 [p_x,p_y] = find(piece_colour == colour);
+perm_index = randperm(length(p_x));
+p_x = p_x(perm_index);
+p_y = p_y(perm_index);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
 previousboardscore = 999;
@@ -195,10 +200,9 @@ for i=1:n_remaining
                 if boardscore<beta
                     beta = boardscore;
                 end
-disp([depth alpha beta boardscore i j n_remaining n_move])
+% disp([depth alpha beta boardscore previousboardscore i j n_remaining n_move])
                 if alpha>beta
                     pruneflag = 1;
-                    disp('alphacut')
                     break
                 end
          end
