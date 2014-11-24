@@ -65,36 +65,21 @@ end_dist = 8-rem(pawn_index, 8);
 sum_pawn_pos = sum(end_dist==0);
 
 %------------------ Gain Factor ------------------------------------------
-<<<<<<< HEAD
 gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -2.5; %Discourages AI to make moves that will lead to threats
 gainOpppieces = 30; %Discourages AI from making moves that do not decrease opponents pieces
 gainOwnpieces = -10; %Discourages AI from making moves that decrease own pieces
-=======
-gainCapture = 1;  %Encourages AI to position a piece such that it can capture more pieces in the next move
-gainMoves = 1; %Encourages AI to position such that it opens space for other pieces
-gainThreats = -10; %Discourages AI to make moves that will lead to threats
-gainOpppieces = -1; %Discourages AI from making moves that do not decrease opponents pieces
-gainOwnpieces = 1; %Discourages AI from making moves that decrease own pieces
->>>>>>> origin/master
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom =1;
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
          + gainMoves * num_moves_available... 
          + gainThreats * opp_capt_value_sum...
-<<<<<<< HEAD
          + gainOpppieces * capt_value_diff...
          + gainOwnpieces * own_piece_sum_diff...
          + gainCentre * centre_space_sum;
 
      boardscore = rand*boardscore;
-=======
-         + gainOpppieces * opp_piece_sum...
-         + gainOwnpieces * own_piece_sum...
-         + gainCentre * centre_space_sum...
-         + gainThreats * opp_capt_value_sum;
-         
->>>>>>> origin/master
+
 end
