@@ -18,7 +18,7 @@ else
 %Produces AI's decision
 tic
 [boardscore,chessboard,piece_colour,num_moves]=...
-    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,2,1,-999,999);
+    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,2,1,-99999,99999);
 toc
 end
 %Translates the results into B.top

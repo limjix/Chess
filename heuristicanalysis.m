@@ -69,7 +69,7 @@ gainCapture = 3;  %Encourages AI to position a piece such that it can capture mo
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -2.5; %Discourages AI to make moves that will lead to threats
 gainOpppieces = 30; %Discourages AI from making moves that do not decrease opponents pieces
-gainOwnpieces = -10; %Discourages AI from making moves that decrease own pieces
+gainOwnpieces = 0; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom =1;
 %----------------- Final Score Calculation ------------------------------
@@ -79,7 +79,5 @@ boardscore =  gainCapture * capt_value_sum...
          + gainOpppieces * capt_value_diff...
          + gainOwnpieces * own_piece_sum_diff...
          + gainCentre * centre_space_sum;
-
-     boardscore = rand*boardscore;
 
 end
