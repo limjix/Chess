@@ -2,6 +2,7 @@ function AIControl(B,piece_colour,chessboard,...
                 num_moves,parameters, handles)
 %AIControl Enables AI to be in action
 [boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,119);
+axes(handles.graph)
 
 %-------------------------------------------------------------------------
 %                       Init Values

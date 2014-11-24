@@ -30,6 +30,9 @@ if maxormin == 1  %Maximizing Player
 %        Loop that generates all possible moves
 %-------------------------------------------------------------------------
 [p_x,p_y] = find(piece_colour == colour);
+perm_index = randperm(length(p_x));
+p_x = p_x(perm_index);
+p_y = p_y(perm_index);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
 previousboardscore = -999;
@@ -57,6 +60,9 @@ for i=1:n_remaining
 %                    Recursion is also added in each loop
 %-------------------------------------------------------------------------
      [move_x,move_y] = find(move ~= 0);
+     perm_index2 = randperm(length(move_x));
+     move_x = move_x(perm_index2);
+     move_y = move_y(perm_index2);
      n_move = length(move_x);
      pruneflag = 0;
 %This loop generates all the game states from 1 piece
@@ -66,7 +72,7 @@ for i=1:n_remaining
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickMovePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 2
-                 [pchessboard, ppiece_colour, pnum_moves,ccaptureval,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
+                 [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 3
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickEnpassant(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
@@ -81,25 +87,31 @@ for i=1:n_remaining
 %--------A node has been generated, what do you want to do with it?--------
          if kingincheck  
              %ignore because move not valid
+             if ~exist('boardscore','var')
+             boardscore = -999;
+             bchessboard = 0;
+             bpiece_colour =0;
+             bnum_moves =0;
+             end
          else
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
-        
-                if boardscore > previousboardscore
-                    previousboardscore = boardscore;
-                    bchessboard = pchessboard;
-                    bpiece_colour = ppiece_colour;
-                    bnum_moves = pnum_moves;
-                end
-                if boardscore>alpha
-                    alpha = boardscore;
-                end
-
-                if alpha>beta
-                    pruneflag = 1;
-                    break
-                end
+    
+                    if boardscore > previousboardscore
+                        previousboardscore = boardscore;
+                        bchessboard = pchessboard;
+                        bpiece_colour = ppiece_colour;
+                        bnum_moves = pnum_moves;
+                    end
+                    if boardscore>alpha
+                        alpha = boardscore;
+                    end
+%             disp([depth alpha beta boardscore previousboardscore i j n_remaining n_move])
+                    if alpha>beta
+                        pruneflag = 1;
+                        break
+                    end
          end
 %--------------------------------------------------------------------------
      end
@@ -116,6 +128,9 @@ elseif maxormin == -1 %Minimizing Player
 %        Loop that generates all possible moves
 %-------------------------------------------------------------------------
 [p_x,p_y] = find(piece_colour == colour);
+perm_index = randperm(length(p_x));
+p_x = p_x(perm_index);
+p_y = p_y(perm_index);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
 previousboardscore = 999;
@@ -143,6 +158,9 @@ for i=1:n_remaining
 %                    Recursion is also added in each loop
 %-------------------------------------------------------------------------
      [move_x,move_y] = find(move ~= 0);
+     perm_index2 = randperm(length(move_x));
+     move_x = move_x(perm_index2);
+     move_y = move_y(perm_index2);
      n_move = length(move_x);
      pruneflag = 0;
 %This loop generates all the game states from 1 piece
@@ -152,7 +170,7 @@ for i=1:n_remaining
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickMovePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 2
-                 [pchessboard, ppiece_colour, pnum_moves,ccaptureval,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
+                 [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 3
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickEnpassant(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
@@ -168,10 +186,17 @@ for i=1:n_remaining
 %--------A node has been generated, what do you want to do with it?--------
          if kingincheck  
              %ignore because move not valid
+             if ~exist('boardscore','var')
+             boardscore = -999;
+             bchessboard = 0;
+             bpiece_colour =0;
+             bnum_moves =0;
+             end
          else
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
             AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
+        
                 if boardscore < previousboardscore
                     previousboardscore = boardscore;
                     bchessboard = pchessboard;
@@ -181,7 +206,7 @@ for i=1:n_remaining
                 if boardscore<beta
                     beta = boardscore;
                 end
-
+% disp([depth alpha beta boardscore previousboardscore i j n_remaining n_move])
                 if alpha>beta
                     pruneflag = 1;
                     break

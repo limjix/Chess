@@ -1,5 +1,5 @@
 %CapturePiece Part of the Click Series of Functions - Enables capture
-function [chessboard,piece_colour, num_moves,ccaptureval,allowscheck]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
+function [chessboard,piece_colour, num_moves,allowscheck]=ClickCapturePiece(v1,v2,x_ori,y_ori,B,piece_colour,chessboard,...
     num_moves,parameters,PM,handles,onlyAIoption,move_x,move_y,varargin)
 
 %--------------------------------------------------------------------------
@@ -32,7 +32,6 @@ else
     ori_y = y_ori;
 end
       
-ccaptureval = chessboard(p_x,p_y);      
 %-------------------------------------------------------------------------
 %            Checks if King is exposed to check in any way
 %-------------------------------------------------------------------------
@@ -82,7 +81,11 @@ if checkopp == 1 && onlyAIoption == 0
     if ischeckmate
         disp('Checkmate')
     end
-
+elseif checkopp == 0 && onlyAIoption ==0
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Stalemate')
+    end
 end
 
 if onlyAIoption == 0
