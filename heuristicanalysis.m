@@ -50,7 +50,7 @@ centre_piece([28 29 36 37])=chessboard([28 29 36 37]);
 centre_piece = centre_piece~=0;
 centre_space_sum =  sum(centre_piece(piece_index));
 
-%------------------------- King's Safety ---------------------------------
+%------------------------- Capture In This Round---------------------------
 
 %------------------- Opponent's King Checked? ----------------------------
 
@@ -77,7 +77,7 @@ boardscore =  gainCapture * capt_value_sum...
          + gainThreats * opp_capt_value_sum...
          + gainOpppieces * opp_piece_sum...
          + gainOwnpieces * own_piece_sum...
-         + gainCentre * centre_space_sum;
+         + gainCentre * centre_space_sum...
          + gainThreats * opp_capt_value_sum;
          
 end

@@ -60,6 +60,9 @@ for i=1:n_remaining
 %                    Recursion is also added in each loop
 %-------------------------------------------------------------------------
      [move_x,move_y] = find(move ~= 0);
+     perm_index2 = randperm(length(move_x));
+     move_x = move_x(perm_index2);
+     move_y = move_y(perm_index2);
      n_move = length(move_x);
      pruneflag = 0;
 %This loop generates all the game states from 1 piece
@@ -69,7 +72,7 @@ for i=1:n_remaining
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickMovePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 2
-                 [pchessboard, ppiece_colour, pnum_moves,ccaptureval,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
+                 [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 3
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickEnpassant(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
@@ -155,6 +158,9 @@ for i=1:n_remaining
 %                    Recursion is also added in each loop
 %-------------------------------------------------------------------------
      [move_x,move_y] = find(move ~= 0);
+     perm_index2 = randperm(length(move_x));
+     move_x = move_x(perm_index2);
+     move_y = move_y(perm_index2);
      n_move = length(move_x);
      pruneflag = 0;
 %This loop generates all the game states from 1 piece
@@ -164,7 +170,7 @@ for i=1:n_remaining
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickMovePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 2
-                 [pchessboard, ppiece_colour, pnum_moves,ccaptureval,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
+                 [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickCapturePiece(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 3
                  [pchessboard, ppiece_colour, pnum_moves,kingincheck]=ClickEnpassant(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...

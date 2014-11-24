@@ -6,11 +6,11 @@ possiblemoves = zeros(8,8);
 
 %This section allows movement in / direction -----------------------------
 i=1;
-while(p_x+i<9 & p_y+i<9)
+while(p_x+i<9 && p_y+i<9)
     if(piece_colour(p_x+i,p_y+i)== r_colour)
         break
     end
-    if(piece_colour(p_x+i,p_y+i)~= r_colour & chessboard(p_x+i,p_y+i)~=0)
+    if(piece_colour(p_x+i,p_y+i)~= r_colour && chessboard(p_x+i,p_y+i)~=0)
         possiblemoves(p_x+i,p_y+i) = 2;
         break
     end
@@ -19,11 +19,11 @@ while(p_x+i<9 & p_y+i<9)
 end
 
 i=1;
-while(p_x-i>0 & p_y-i>0)
+while(p_x-i>0 && p_y-i>0)
     if(piece_colour(p_x-i,p_y-i)== r_colour)
         break
     end
-    if(piece_colour(p_x-i,p_y-i)~= r_colour & chessboard(p_x-i,p_y-i)~=0)
+    if(piece_colour(p_x-i,p_y-i)~= r_colour && chessboard(p_x-i,p_y-i)~=0)
         possiblemoves(p_x-i,p_y-i) = 2;
         break
     end
@@ -33,11 +33,11 @@ end
 
 %This section allows movement in the \ direction-------------------------
 i=1;
-while(p_x+i<9 & p_y-i>0)
+while(p_x+i<9 && p_y-i>0)
     if(piece_colour(p_x+i,p_y-i)== r_colour)
         break
     end
-    if(piece_colour(p_x+i,p_y-i)~= r_colour & chessboard(p_x+i,p_y-i)~=0)
+    if(piece_colour(p_x+i,p_y-i)~= r_colour && chessboard(p_x+i,p_y-i)~=0)
         possiblemoves(p_x+i,p_y-i) = 2;
         break
     end
@@ -46,11 +46,11 @@ while(p_x+i<9 & p_y-i>0)
 end
 
 i=1;
-while(p_x-i>0 & p_y+i<9)
+while(p_x-i>0 && p_y+i<9)
     if(piece_colour(p_x-i,p_y+i)== r_colour)
         break
     end
-    if(piece_colour(p_x-i,p_y+i)~= r_colour & chessboard(p_x-i,p_y+i)~=0)
+    if(piece_colour(p_x-i,p_y+i)~= r_colour && chessboard(p_x-i,p_y+i)~=0)
         possiblemoves(p_x-i,p_y+i) = 2;
         break
     end

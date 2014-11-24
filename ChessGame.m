@@ -22,7 +22,7 @@ function varargout = ChessGame(varargin)
 
 % Edit the above text to modify the response to help ChessGame
 
-% Last Modified by GUIDE v2.5 27-Oct-2014 15:01:49
+% Last Modified by GUIDE v2.5 24-Nov-2014 13:29:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -81,3 +81,61 @@ function startbutton_Callback(hObject, eventdata, handles)
 % create main figure window
 
 mdp_chessboard(handles)
+
+
+
+function gameconsole_Callback(hObject, eventdata, handles)
+% hObject    handle to gameconsole (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of gameconsole as text
+%        str2double(get(hObject,'String')) returns contents of gameconsole as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function gameconsole_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to gameconsole (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Queen.
+function Queen_Callback(hObject, eventdata, handles)
+% hObject    handle to Queen (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Bishop.
+function Bishop_Callback(hObject, eventdata, handles)
+% hObject    handle to Bishop (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Knight.
+function Knight_Callback(hObject, eventdata, handles)
+% hObject    handle to Knight (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Rook.
+function Rook_Callback(hObject, eventdata, handles)
+% hObject    handle to Rook (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in hintbutton.
+function hintbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to hintbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

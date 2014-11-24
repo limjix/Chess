@@ -84,6 +84,11 @@ if checkopp == 1 && onlyAIoption ==0
     if ischeckmate
         disp('Checkmate')
     end
+elseif checkopp == 0 && onlyAIoption ==0
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Stalemate')
+    end
 end
 
 %-------------------------------------------------------------------------
