@@ -18,7 +18,8 @@ TmpB.info.turn = TmpB.info.turn +1;
 %-------------------------------------------------------------------------
 
 if depth == 0
-  [boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,colour);
+   TmpB.info.turn = TmpB.info.turn -1;
+  [boardscore] = heuristicanalysis(TmpB,chessboard, piece_colour,num_moves,colour);
   bchessboard = chessboard;
   bpiece_colour = piece_colour;
   bnum_moves = num_moves;

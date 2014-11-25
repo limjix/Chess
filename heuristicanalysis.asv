@@ -1,9 +1,9 @@
 
-function [boardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,currentcolour)
+function [boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,currentcolour)
 %Colour should be the side in which it is being analysed for
 
 %-------------------------------------------------------------------------
-%                        Init Values
+%
 %-------------------------------------------------------------------------
 if currentcolour == 119
     oppcolour = 98;
@@ -18,8 +18,6 @@ end
 %Finds the locations of own pieces and opponent's pieces
 piece_index = find(piece_colour==currentcolour);
 opp_piece_index = find(piece_colour==oppcolour);
-
-%-------------------------------------------------------------------------
 
 %-------------------Capture Analysis--------------------------------------
 %A move is good because it opens up capture possibilities
@@ -37,8 +35,8 @@ num_moves_available = sum(sum(nocapture));
 
 %------------------ Threats ----------------------------------------------
 %If the move causes other pieces to be under threat, the move is worse.
-opp_num_pot_capture = length(oppcolourcapt_index);
-opp_capt_value_sum = sum(chessboard(oppcolourcapt_index)); 
+opp_num_pot_capture = length(opp_capt_index);
+opp_capt_value_sum = sum(chessboard(opp_capt_index)); 
 
 %------------------ Number of own pieces ---------------------------------
 %A move is good if it prevents the number of own pieces from decreasing.
@@ -55,7 +53,7 @@ centre_space_sum =  sum(centre_piece(piece_index));
 
 %------------------- Own King Checked? -----------------------------------
 %Checks if own king is in check. If in check, also checks if its a checkmate
-own_ischeck = KingCheck(chessboard,piece_colour,currentcolour,oppcolourcapt_index,oppcolourpotentialmoves);
+own_ischeck = KingCheck(chessboard,piece_colour,currentcolour,opp_capt_index,opp_potentialmoves);
 if own_ischeck==1
     own_ischeckmate = checkmate(B,chessboard,piece_colour,num_moves);
     else own_ischeckmate = 0;
@@ -63,7 +61,7 @@ end
 
 %--------------------- Opponent Checkmate?--------------------------------
 %Checks if opponent king is in check. If in check, also checks if its a checkmate
-opp_ischeck = KingCheck(chessboard,piece_colour,oppcolour,capt_index,potentialmoves);
+opp_ischeck = KingCheck(chessboard,piece_colour,oppcolour, oppcolourcapt_index,oppcolourpotentialmoves);
 if opp_ischeck==1
     opp_ischeckmate = checkmate(B,chessboard,piece_colour,num_moves);
 else opp_ischeckmate = 0;

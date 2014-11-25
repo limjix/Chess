@@ -2,7 +2,7 @@ function AIControl(B,piece_colour,chessboard,...
                 num_moves,parameters, handles)
 %AIControl Enables AI to be in action
 
-[userboardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,119);
+[userboardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,119);
 % plot(handles.graph,B.info.turn,userboardscore,'*')
 % set(handles.graph,'XColor','w','YColor','w')
 set(handles.UPS,'String',userboardscore)
@@ -27,24 +27,27 @@ toc
 end
 %Translates the results into B.top
 [B] = readchessboard(B,chessboard,piece_colour);
-[AIBoardScore] = heuristicanalysis(chessboard, piece_colour,num_moves,98);
+[AIBoardScore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,98);
 set(handles.APS,'String',AIBoardScore)
 
 %Iterates turn
 B.info.turn = B.info.turn + 1;
 
-[AIBoardScore] = heuristicanalysis(chessboard, piece_colour,num_moves,98);
-set(handles.APS,'String',AIBoardScore)
-
 %------------------------ Checks if AI has checkmated User ---------------
 [oppcolourpotentialmoves,oppcolourcapt_index] = analyseboard(chessboard, piece_colour,num_moves,98);
 
 [ischeck]=KingCheck(chessboard,piece_colour,119, oppcolourcapt_index,oppcolourpotentialmoves);
-[ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
-if ischeckmate && ischeck
-    disp('Checkmate')
-elseif ischeckmate && ~ischeck
-    disp('Stalemate')
+if ischeck == 1
+    disp('Check')
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Checkmate')
+    end
+elseif ischeck == 0
+    [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
+    if ischeckmate
+        disp('Stalemate')
+    end
 end
 %-------------------------------------------------------------------------
 
