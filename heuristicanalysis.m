@@ -96,15 +96,12 @@ end
 gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -2.5; %Discourages AI to make moves that will lead to threats
-<<<<<<< HEAD
 gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
-=======
-gainOpppieces = 30; %Discourages AI from making moves that do not decrease opponents pieces
->>>>>>> origin/master
 gainOwnpieces = 0; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
 gainOppprom = -1; %Discourages AI to promote opponent's pawns
+
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
          + gainMoves * num_moves_available... 
@@ -118,13 +115,13 @@ boardscore =  gainCapture * capt_value_sum...
 %If a checkmate has occured, new boadscores are assigned     
 if opp_ischeckmate == 1,
     boardscore = 99999;
+    disp('checkmate')
 end
 
-<<<<<<< HEAD
 if own_ischeckmate == 1,
     boardscore = -99999;
+    disp('checkmate')
 end
 
-=======
->>>>>>> origin/master
+
 end
