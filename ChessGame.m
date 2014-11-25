@@ -22,7 +22,7 @@ function varargout = ChessGame(varargin)
 
 % Edit the above text to modify the response to help ChessGame
 
-% Last Modified by GUIDE v2.5 24-Nov-2014 13:29:11
+% Last Modified by GUIDE v2.5 25-Nov-2014 12:59:34
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -54,6 +54,17 @@ function ChessGame_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for ChessGame
 handles.output = hObject;
+
+%-------------------- Creates the Background -----------------------------
+% % create an axes that spans the whole gui
+% ah = axes('unit', 'normalized', 'position', [0 0 1 1]);
+% % import the background image and show it on the axes
+% bg = imread('WoodText.jpg'); imagesc(bg);
+% % prevent plotting over the background and turn the axis off
+% set(ah,'handlevisibility','off','visible','off')
+% % making sure the background is behind all the other uicontrols
+% uistack(ah, 'bottom');
+%-------------------------------------------------------------------------
 
 % Update handles structure
 guidata(hObject, handles);
@@ -137,5 +148,114 @@ function Rook_Callback(hObject, eventdata, handles)
 % --- Executes on button press in hintbutton.
 function hintbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to hintbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.gameconsole,'String','test')
+
+
+
+function UPS_Callback(hObject, eventdata, handles)
+% hObject    handle to UPS (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of UPS as text
+%        str2double(get(hObject,'String')) returns contents of UPS as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function UPS_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to UPS (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+function APS_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to UPS (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+function APS_Callback(hObject, eventdata, handles)
+% hObject    handle to tex1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of tex1 as text
+%        str2double(get(hObject,'String')) returns contents of tex1 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function tex1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to tex1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function depth_Callback(hObject, eventdata, handles)
+% hObject    handle to depth (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of depth as text
+%        str2double(get(hObject,'String')) returns contents of depth as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function depth_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to depth (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function Nodescore_Callback(hObject, eventdata, handles)
+% hObject    handle to Nodescore (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of Nodescore as text
+%        str2double(get(hObject,'String')) returns contents of Nodescore as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function Nodescore_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Nodescore (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Freemove.
+function Freemove_Callback(hObject, eventdata, handles)
+% hObject    handle to Freemove (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)

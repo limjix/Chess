@@ -35,7 +35,7 @@ p_x = p_x(perm_index);
 p_y = p_y(perm_index);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
-previousboardscore = -999;
+previousboardscore = -99999;
 %In essence, we are going through each piece, looking at it's possible
 %moves, make those possible moves, evaluate, save bestboard.
 for i=1:n_remaining
@@ -88,7 +88,7 @@ for i=1:n_remaining
          if kingincheck  
              %ignore because move not valid
              if ~exist('boardscore','var')
-             boardscore = -999;
+             boardscore = -99999;
              bchessboard = 0;
              bpiece_colour =0;
              bnum_moves =0;
@@ -133,7 +133,7 @@ p_x = p_x(perm_index);
 p_y = p_y(perm_index);
 n_remaining = length(p_x);
 [potentialmoves] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
-previousboardscore = 999;
+previousboardscore = 99999;
 %In essence, we are going through each piece, looking at it's possible
 %moves, make those possible moves, evaluate, save bestboard.
 for i=1:n_remaining
@@ -187,7 +187,7 @@ for i=1:n_remaining
          if kingincheck  
              %ignore because move not valid
              if ~exist('boardscore','var')
-             boardscore = -999;
+             boardscore = 99999;
              bchessboard = 0;
              bpiece_colour =0;
              bnum_moves =0;
@@ -206,6 +206,7 @@ for i=1:n_remaining
                 if boardscore<beta
                     beta = boardscore;
                 end
+                
 % disp([depth alpha beta boardscore previousboardscore i j n_remaining n_move])
                 if alpha>beta
                     pruneflag = 1;

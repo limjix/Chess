@@ -72,15 +72,20 @@ disp('Pawn has been promoted');
             flags=0;
           while(flags==0)
               flags=1;
-              pawn_prom = input('Please enter a valid piece name\n','s')          
+              v=0;
+              while v == 0
+              [pawn_prom,v] = listdlg('PromptString','Select a piece:',...
+                'SelectionMode','single',...
+                'ListString',{'Rook','Queen','Knight','Bishop'});
+              end
             switch pawn_prom
-                case 'rook'
+                case 1
                     chessboard(p_x,p_y)= 5;
-                case 'queen'
+                case 2
                     chessboard(p_x,p_y)= 9;
-                case 'knight'
+                case 3
                     chessboard(p_x,p_y)= 3;
-                case 'bishop'
+                case 4
                     chessboard(p_x,p_y)= 4;
                 otherwise
                     disp('Invalid input');

@@ -2,10 +2,9 @@
 function mdp_chessboard(handles)
 %GameType='Contemporary',
 B = BoardInitialization('Contemporary');
-uih.f1 = handles.boardtop;
+uih.f1 = handles.graph;
 % ========================== BOARD GRAPHICS ==============================
 % clear the figure
-delete(findobj('type','axes'))
 
 % obtain size of playable area (in squares)
 tmp = size(B.top)-B.info.pad;
@@ -47,6 +46,14 @@ hlastmove = rectangle('position',[0 0 1 1],'facecolor','none',...
     'linewidth',1,'visible','off','edgecolor',[0.2 0.8 0.2],'linewidth',3);
 % good yellow color if rectangle uistack works again: [0.95 0.95 0]
 
+%--------------------Plots Border Around ChessBoard -----------------------
+% borderhdl = axes('unit', 'normalized', 'position', [0.045 0.03 0.46 0.95]);
+% % import the background image and show it on the axes
+% bg = imread('WoodBorder3.jpg'); imagesc(bg);
+% % prevent plotting over the background and turn the axis off
+% set(borderhdl,'handlevisibility','off','visible','off')
+% % making sure the border is behind all the other uicontrols
+% uistack(borderhdl, 'down');
 %-------------------- Initialise parameters for Rectangles ----------------
 x =[   -0.0709   8.0709];
 y=x;
