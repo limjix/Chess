@@ -1,6 +1,7 @@
 function AIControl(B,piece_colour,chessboard,...
-                num_moves,parameters,handles)
+                num_moves,parameters, handles)
 %AIControl Enables AI to be in action
+
 [userboardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,119);
 % plot(handles.graph,B.info.turn,userboardscore,'*')
 % set(handles.graph,'XColor','w','YColor','w')
@@ -23,13 +24,12 @@ tic
 [boardscore,chessboard,piece_colour,num_moves]=...
     AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,depth,1,-99999,99999);
 toc
-set(handles.Nodescore,'String',boardscore)
 end
 %Translates the results into B.top
 [B] = readchessboard(B,chessboard,piece_colour);
-
 [AIBoardScore] = heuristicanalysis(chessboard, piece_colour,num_moves,98);
 set(handles.APS,'String',AIBoardScore)
+
 %Iterates turn
 B.info.turn = B.info.turn + 1;
 

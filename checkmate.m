@@ -60,7 +60,7 @@ for i=1:n_remaining
                      num_moves,0,move,0,1,move_x(j),move_y(j));
              case 5
                  [pchessboard,ppiece_colour, pnum_moves,kingincheck]=ClickPawnPromo(0,0,p_x(i),p_y(i),B,piece_colour,chessboard,...
-                     num_moves,0,move,0,1,move_x(j),move_y(j));
+                     num_moves,0,move,0,1,move_x(j),move_y(j),'queen');
          end
          
          result = min(kingincheck, result);
