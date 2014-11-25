@@ -14,10 +14,12 @@ else
     oppcolour = 119;
 end
 
+%Generates potential moves of the opponent
+[oppcolourpotentialmoves, oppcolourcapt_index] = analyseboard(chessboard, piece_colour,num_moves,oppcolour);
+
+%Finds the locations of own pieces and opponent's pieces
 piece_index = find(piece_colour==currentcolour);
 opp_piece_index = find(piece_colour==oppcolour);
-%ccaptureval is for the value of the piece that was captured in this game
-%state to be added to the value of the calculation
 
 %-------------------Capture Analysis--------------------------------------
 %A move is good because it opens up capture possibilities
@@ -51,35 +53,71 @@ centre_piece([28 29 36 37])=chessboard([28 29 36 37]);
 centre_piece = centre_piece~=0;
 centre_space_sum =  sum(centre_piece(piece_index));
 
-%------------------------- Capture In This Round---------------------------
 
-%------------------- Opponent's King Checked? ----------------------------
+%------------------- Own King Checked? -----------------------------------
+%Checks if own king is in check. If in check, also checks if its a checkmate
+own_value = KingCheck(chessboard,piece_colour,currentcolour,capt_index,potentialmoves);
+if own_value==1
+    own_ischeckmate = checkmate(B,chessboard,piece_colour,num_moves);
+    else own_ischeckmate = 0;
+end
 
-%--------------------- Checkmate?-----------------------------------------
+%--------------------- Opponent Checkmate?--------------------------------
+%Checks if opponent king is in check. If in check, also checks if its a checkmate
+opp_value = KingCheck(chessboard,piece_colour,oppcolour, oppcolourcapt_index,oppcolourpotentialmoves);
+if opp_value==1
+    opp_ischeckmate = checkmate(B,chessboard,piece_colour,num_moves);
+else opp_ischeckmate = 0;
+end   
+
+%------------------- Possibility of opponenet's promotion? ---------------
+%A move is bad if it brings opponent's pawn closer to the end of the board for promotion.
+pawn_index = find(chessboard==1 & piece_colour==oppcolour);
+if oppcolour == 98
+    end_dist = 8-rem(pawn_index,8);
+    sum_opp_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
+else
+    end_dist = rem(pawn_index,8)-1; 
+    sum_opp_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
+end
 
 %--------------------- Possibility of own promotion? ---------------------
 %A move is good if it brings own pawn closer to the end of the board for promotion.
-pawn_pos = chessboard==1 & piece_colour==currentcolour;
-pawn_index = find(pawn_pos==1);
-end_dist = 8-rem(pawn_index, 8);
-sum_pawn_pos = sum(end_dist==0);
+pawn_index = find(chessboard==1 & piece_colour==currentcolour);
+if currentcolour == 98
+    end_dist = 8-rem(pawn_index,8);
+    sum_own_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
+else
+    end_dist = rem(pawn_index,8)-1; 
+    sum_own_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
+end
 
 %------------------ Gain Factor ------------------------------------------
 gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -2.5; %Discourages AI to make moves that will lead to threats
-gainOpppieces = 30; %Discourages AI from making moves that do not decrease opponents pieces
-gainOwnpieces = -10; %Discourages AI from making moves that decrease own pieces
+gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
+gainOwnpieces = 0; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
-gainOwnprom =1;
+gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
+gainOppprom = -1; %Discourages AI to promote opponent's pawns
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
          + gainMoves * num_moves_available... 
          + gainThreats * opp_capt_value_sum...
          + gainOpppieces * capt_value_diff...
          + gainOwnpieces * own_piece_sum_diff...
-         + gainCentre * centre_space_sum;
+         + gainCentre * centre_space_sum...
+         + gainOwnprom * sum_own_pawn_dist...
+         + gainOppprom * sum_opp_pawn_dist;
 
-     boardscore = rand*boardscore;
+%If a checkmate has occured, new boadscores are assigned     
+if opp_ischeckmate == 1,
+    boardscore = 99999;
+end
+
+if own_ischeckmate == 1,
+    boardscore = -99999;
+end
 
 end

@@ -1,7 +1,7 @@
 function AIControl(B,piece_colour,chessboard,...
                 num_moves,parameters, handles)
 %AIControl Enables AI to be in action
-[boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,119);
+[boardscore] = heuristicanalysis(chessboard, piece_colour,num_moves,119)
 
 %-------------------------------------------------------------------------
 %                       Init Values
@@ -18,7 +18,7 @@ else
 %Produces AI's decision
 tic
 [boardscore,chessboard,piece_colour,num_moves]=...
-    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,2,1,-999,999);
+    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,3,1,-99999,99999);
 toc
 end
 %Translates the results into B.top
