@@ -22,7 +22,7 @@ function varargout = ChessGame(varargin)
 
 % Edit the above text to modify the response to help ChessGame
 
-% Last Modified by GUIDE v2.5 25-Nov-2014 12:59:34
+% Last Modified by GUIDE v2.5 26-Nov-2014 10:36:59
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -56,14 +56,14 @@ function ChessGame_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 
 %-------------------- Creates the Background -----------------------------
-% % create an axes that spans the whole gui
-% ah = axes('unit', 'normalized', 'position', [0 0 1 1]);
-% % import the background image and show it on the axes
-% bg = imread('WoodText.jpg'); imagesc(bg);
-% % prevent plotting over the background and turn the axis off
-% set(ah,'handlevisibility','off','visible','off')
-% % making sure the background is behind all the other uicontrols
-% uistack(ah, 'bottom');
+% create an axes that spans the whole gui
+ah = axes('unit', 'normalized', 'position', [0 0 1 1]);
+% import the background image and show it on the axes
+bg = imread('WoodText.jpg'); imagesc(bg);
+% prevent plotting over the background and turn the axis off
+set(ah,'handlevisibility','off','visible','off')
+% making sure the background is behind all the other uicontrols
+uistack(ah, 'bottom');
 %-------------------------------------------------------------------------
 
 % Update handles structure
@@ -259,3 +259,26 @@ function Freemove_Callback(hObject, eventdata, handles)
 % hObject    handle to Freemove (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
+function AIMsgs_Callback(hObject, eventdata, handles)
+% hObject    handle to AIMsgs (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of AIMsgs as text
+%        str2double(get(hObject,'String')) returns contents of AIMsgs as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function AIMsgs_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to AIMsgs (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

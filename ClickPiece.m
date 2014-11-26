@@ -3,6 +3,8 @@
 function [varargout]=ClickPiece(var1,var2,B,piece_colour,chessboard,...
     num_moves,parameters,potentialmoves,handles,varargin )
 
+set(handles.gameconsole,'String','')
+
 %----------Determines which colour is able to be selected------------------
 if(mod(B.info.turn,2)==1)
     colourturn = 119;

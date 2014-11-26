@@ -1,7 +1,6 @@
 function AIControl(B,piece_colour,chessboard,...
                 num_moves,parameters, handles)
 %AIControl Enables AI to be in action
-
 [userboardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,119);
 % plot(handles.graph,B.info.turn,userboardscore,'*')
 % set(handles.graph,'XColor','w','YColor','w')
@@ -10,12 +9,15 @@ set(handles.UPS,'String',userboardscore)
 %                       Init Values
 %-------------------------------------------------------------------------
 depth = 2;
+set(handles.depth,'String',depth)
+
+%------------------ Stops Game Execution if White Wins -------------------
 [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
 if ischeckmate
     return
 end
 %-------------------------------------------------------------------------
-disp('Thinking Really Hard')
+set(handles.AIMsgs,'String','Thinking Really Hard')
 if B.info.turn ==2 
     [chessboard,piece_colour,num_moves] = OpeningMoves(B,chessboard,piece_colour, num_moves);
 else
@@ -23,7 +25,9 @@ else
 tic
 [boardscore,chessboard,piece_colour,num_moves]=...
     AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,depth,1,-99999,99999);
-toc
+time =toc;
+
+set(handles.AIMsgs,'String',['Time Taken To Think Was: ' num2str(time) ' seconds'])
 end
 %Translates the results into B.top
 [B] = readchessboard(B,chessboard,piece_colour);
@@ -38,15 +42,15 @@ B.info.turn = B.info.turn + 1;
 
 [ischeck]=KingCheck(chessboard,piece_colour,119, oppcolourcapt_index,oppcolourpotentialmoves);
 if ischeck == 1
-    disp('Check')
+    set(handles.gameconsole,'String','Check')
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        disp('Checkmate')
+        set(handles.gameconsole,'String','Checkmate, Black Wins')
     end
 elseif ischeck == 0
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        disp('Stalemate')
+        set(handles.gameconsole,'String','Stalemate')
     end
 end
 %-------------------------------------------------------------------------

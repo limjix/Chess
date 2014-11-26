@@ -56,7 +56,7 @@ f_num_moves(ori_x,ori_y) = 0;
 [allowscheck]=KingCheck(fboard,f_p_colour,colourturn,...
     capt_index_future,potentialfuturemoves);
 if allowscheck ==1 && onlyAIoption == 0
-    disp('King will be left in check, move invalid')
+    set(handles.gameconsole,'String','King will be left in check, move invalid')
 end
 %-------------------------------------------------------------------------
 %Ensures it can only move legally
@@ -121,12 +121,12 @@ if checkopp == 1 && onlyAIoption == 0
     disp('Check')
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        disp('Checkmate')
+        set(handles.gameconsole,'String','Checkmate, White Wins')
     end
     elseif checkopp == 0 && onlyAIoption ==0
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        disp('Stalemate')
+        set(handles.gameconsole,'String','Stalemate')
     end
 end
 
