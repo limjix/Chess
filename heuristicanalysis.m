@@ -112,16 +112,39 @@ else %White case
     sum_own_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
 end
 
-%------------------ Gain Factor ------------------------------------------
+%------------------ Gain Factor for Hard-------------------------------------
+if(get(handles.setHard,'Value')==1)
 gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
-gainThreats = -2.5; %Discourages AI to make moves that will lead to threats
+gainThreats = -3; %Discourages AI to make moves that will lead to threats
 gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
 gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
-gainOppprom = -1; %Discourages AI to promote opponent's pawns
-
+gainOppprom = -10; %Discourages AI to promote opponent's pawns
+end
+%--------------------Gain Factor for Easy ---------------------------------
+if(get(handles.setEasy,'Value')==1)
+gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
+gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
+gainThreats = -3; %Discourages AI to make moves that will lead to threats
+gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
+gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
+gainCentre = 1; %Encourages AI to increase control of centre space
+gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
+gainOppprom = -10; %Discourages AI to promote opponent's pawns
+end
+%--------------------- Gain Factor for Random -----------------------------
+if(get(handles.setRandom,'Value')==1)
+gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
+gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
+gainThreats = -3; %Discourages AI to make moves that will lead to threats
+gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
+gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
+gainCentre = 1; %Encourages AI to increase control of centre space
+gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
+gainOppprom = -10; %Discourages AI to promote opponent's pawns
+end
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
          + gainMoves * num_moves_available... 
@@ -132,18 +155,29 @@ boardscore =  gainCapture * capt_value_sum...
          + gainOwnprom * sum_own_pawn_dist...
          + gainOppprom * sum_opp_pawn_dist;
 
-%If a checkmate has occured, new boadscores are assigned     
-if opp_ischeckmate == 1
-    boardscore = 99999;
-end
+%If a checkmate has occured, new boadscores are assigned
+if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
+    if opp_ischeckmate == 1
+        boardscore = 99999;
+    end
 
-if own_ischeckmate == 1
-    boardscore = -99999;
-end
+    if own_ischeckmate == 1
+        boardscore = -99999;
+    end
 
+<<<<<<< HEAD
 %checks if castling has occured
 if castle == 1
     boardscore = boardscore + 250;
+=======
+    %checks if castling has occured
+    if castle == 1
+        boardscore = boardscore + 500;
+    end
+>>>>>>> origin/master
 end
 
+if(get(handles.setRandom,'Value')==1)
+    rand* 2000;
+end
 end

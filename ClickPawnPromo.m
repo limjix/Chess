@@ -68,7 +68,7 @@ if PM(p_x,p_y)==5 && allowscheck==0
 %--------------------------------------------------------------------------
 %Allows user to input desired piece. Checks legality.
 if ~onlyAIoption
-disp('Pawn has been promoted');
+set(handles.gameconsole,'String','Pawn has been promoted');
             flags=0;
           while(flags==0)
               flags=1;
@@ -123,15 +123,17 @@ num_moves(ori_x,ori_y) = 0;
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if checkopp == 1 && onlyAIoption == 0
-   set(handles.gameconsole,'String','Check')
+   set(handles.checkstat,'String','Check')
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        set(handles.gameconsole,'String','Checkmate, White Wins')
+        set(handles.checkstat,'String','Checkmate, White Wins')
     end
 elseif checkopp == 0 && onlyAIoption ==0
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        set(handles.gameconsole,'String','Stalemate')
+        set(handles.checkstat,'String','Stalemate')
+    else
+        set(handles.checkstat,'String','')
     end
 end
 

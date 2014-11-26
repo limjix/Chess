@@ -339,7 +339,7 @@ function setRandom_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of setRandom
 
     set(handles.setEasy,'Value',0);
-    set(handles.setHard,'Value',0);
+    set(handles.setHard,'Value')=0;
 
 
 % --- Executes on button press in checkbox4.
