@@ -48,7 +48,7 @@ B.info.turn = B.info.turn + 1;
 [AIBoardScore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,98,handles);
 set(handles.APS,'String',AIBoardScore)
 handles.AIBoardscore = [handles.AIBoardscore AIBoardScore];
-
+clf(fig) 
 %---------------------Plots AI Board Score--------------------------------
 
  handles.turnforblack = [handles.turnforblack B.info.turn-1];

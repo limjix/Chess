@@ -14,10 +14,10 @@ handles.turnforwhite = 0;
 %-------------------Sets every box and figure to start position -----------
 set(handles.gameconsole,'String','')
 set(handles.checkstat,'String','')
-set(handles.AIMsgs,'String','')
-set(handles.APS,'String','')
-set(handles.UPS,'String','')
-set(handles.depth,'String','')
+set(handles.gameconsole,'String','')
+set(handles.gameconsole,'String','')
+set(handles.gameconsole,'String','')
+set(handles.gameconsole,'String','')
 %--------------------------------------------------------------------------
 
 % obtain size of playable area (in squares)
@@ -61,7 +61,7 @@ hlastmove = rectangle('position',[0 0 1 1],'facecolor','none',...
 % good yellow color if rectangle uistack works again: [0.95 0.95 0]
 
 %--------------------Plots Border Around ChessBoard -----------------------
-borderhdl = axes('unit', 'normalized', 'position', [0.040 0.03 0.47 0.95]);
+borderhdl = axes('unit', 'normalized', 'position', [0.045 0.03 0.46 0.95]);
 % import the background image and show it on the axes
 bg = imread('WoodBorder3.jpg'); imagesc(bg);
 % prevent plotting over the background and turn the axis off
