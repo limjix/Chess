@@ -156,7 +156,7 @@ boardscore =  gainCapture * capt_value_sum...
          + gainOppprom * sum_opp_pawn_dist;
 
 %If a checkmate has occured, new boadscores are assigned
-if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
+if(get(handles.setHard,'Value')==1 )
     if opp_ischeckmate == 1
         boardscore = 99999;
     end
@@ -169,9 +169,5 @@ if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
     if castle == 1
         boardscore = boardscore + 500;
     end
-end
-
-if(get(handles.setRandom,'Value')==1)
-    rand* 2000;
 end
 end
