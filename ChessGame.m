@@ -54,7 +54,7 @@ function ChessGame_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for ChessGame
 handles.output = hObject;
-
+set(handles.setHard,'Value',1);
 %-------------------- Creates the Background -----------------------------
 % create an axes that spans the whole gui
 ah = axes('unit', 'normalized', 'position', [0 0 1 1]);

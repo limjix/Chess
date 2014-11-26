@@ -1,14 +1,14 @@
 function AIControl(B,piece_colour,chessboard,...
                 num_moves,parameters, handles)
 %AIControl Enables AI to be in action
-[userboardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,119);
+[userboardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,119,handles);
 % plot(handles.graph,B.info.turn,userboardscore,'*')
 % set(handles.graph,'XColor','w','YColor','w')
 set(handles.UPS,'String',userboardscore)
 %-------------------------------------------------------------------------
 %                       Init Values
 %-------------------------------------------------------------------------
-depth = 3;
+depth = 2;
 set(handles.depth,'String',depth)
 
 %------------------ Stops Game Execution if White Wins -------------------
@@ -24,7 +24,7 @@ else
 %Produces AI's decision
 tic
 [boardscore,chessboard,piece_colour,num_moves]=...
-    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,depth,1,-99999,99999);
+    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,depth,1,-99999,99999,handles);
 time =toc;
 
 set(handles.AIMsgs,'String',['Time Taken To Think Was: ' num2str(time) ' seconds'])
@@ -35,7 +35,7 @@ end
 B.info.turn = B.info.turn + 1;
 
 %--------------------- Shows AI Board Score-------------------------------
-[AIBoardScore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,98);
+[AIBoardScore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,98,handles);
 set(handles.APS,'String',AIBoardScore)
 
 

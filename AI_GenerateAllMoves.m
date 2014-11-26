@@ -1,6 +1,6 @@
 %AI - Generates moves and stores them for 1 PLY (Only for DATA Tree)
 function [boardscore,bchessboard,bpiece_colour,bnum_moves]=...
-    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,depth,maxormin,alpha,beta)
+    AI_GenerateAllMoves(B,chessboard,piece_colour,num_moves,depth,maxormin,alpha,beta,handles)
 %-------------------------------------------------------------------------
 %                           Init Values
 %-------------------------------------------------------------------------
@@ -19,7 +19,7 @@ TmpB.info.turn = TmpB.info.turn +1;
 
 if depth == 0
    TmpB.info.turn = TmpB.info.turn -1;
-  [boardscore] = heuristicanalysis(TmpB,chessboard, piece_colour,num_moves,colour);
+  [boardscore] = heuristicanalysis(TmpB,chessboard, piece_colour,num_moves,colour,handles);
   bchessboard = chessboard;
   bpiece_colour = piece_colour;
   bnum_moves = num_moves;
@@ -97,7 +97,7 @@ for i=1:n_remaining
          else
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
-            AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
+            AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta,handles);
     
                     if boardscore > previousboardscore
                         previousboardscore = boardscore;
@@ -196,7 +196,7 @@ for i=1:n_remaining
          else
                  %Generate another layer with recursive parameters
                  [boardscore,~,~,~]=...
-            AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta);
+            AI_GenerateAllMoves(TmpB,pchessboard,ppiece_colour,pnum_moves,depth-1,-maxormin,alpha,beta,handles);
         
                 if boardscore < previousboardscore
                     previousboardscore = boardscore;

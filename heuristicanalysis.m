@@ -1,5 +1,5 @@
 
-function [boardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,currentcolour)
+function [boardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,currentcolour,handles)
 %Colour should be the side in which it is being analysed for
 
 %-------------------------------------------------------------------------
