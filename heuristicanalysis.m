@@ -61,6 +61,27 @@ if own_ischeck==1
     else own_ischeckmate = 0;
 end
 
+%--------------------------- Castling? -----------------------------------
+%Checks if castling has taken place
+rook_pos = find(chessboard==5 & piece_colour==currentcolour);
+king_pos = find(chessboard==10 & piece_colour==currentcolour);
+castle = 0;
+
+if currentcolour == 98 %Black case
+    if (king_pos==49 && ismember(41,rook_pos) && num_moves(41)==1 && num_moves(49)==1)
+        castle = 1;
+    elseif (king_pos==17 && ismember(25,rook_pos) && num_moves(25)==1 && num_moves(17)==1)
+            castle = 1;
+    end
+    
+else %White case
+    if (king_pos==56 && ismember(48,rook_pos) && num_moves(48)==1 && num_moves(56)==1)
+        castle = 1;
+    elseif (king_pos==24 && ismember(32,rook_pos) && num_moves(32)==1 && num_moves(24)==1)
+            castle = 1;
+    end
+end
+
 %--------------------- Opponent Checkmate?--------------------------------
 %Checks if opponent king is in check. If in check, also checks if its a checkmate
 opp_ischeck = KingCheck(chessboard,piece_colour,oppcolour,capt_index,potentialmoves);
@@ -72,10 +93,10 @@ end
 %------------------- Possibility of opponenet's promotion? ---------------
 %A move is bad if it brings opponent's pawn closer to the end of the board for promotion.
 pawn_index = find(chessboard==1 & piece_colour==oppcolour);
-if oppcolour == 98
+if oppcolour == 98 %Black case
     end_dist = 8-rem(pawn_index,8);
     sum_opp_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
-else
+else %White case
     end_dist = rem(pawn_index,8)-1; 
     sum_opp_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
 end
@@ -83,10 +104,10 @@ end
 %--------------------- Possibility of own promotion? ---------------------
 %A move is good if it brings own pawn closer to the end of the board for promotion.
 pawn_index = find(chessboard==1 & piece_colour==currentcolour);
-if currentcolour == 98
+if currentcolour == 98 %Black case
     end_dist = 8-rem(pawn_index,8);
     sum_own_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
-else
+else %White case
     end_dist = rem(pawn_index,8)-1; 
     sum_own_pawn_dist = sum(end_dist==0) + 0.5*sum(end_dist==1);
 end
@@ -96,7 +117,7 @@ gainCapture = 3;  %Encourages AI to position a piece such that it can capture mo
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -2.5; %Discourages AI to make moves that will lead to threats
 gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
-gainOwnpieces = 0; %Discourages AI from making moves that decrease own pieces
+gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
 gainOppprom = -1; %Discourages AI to promote opponent's pawns
@@ -112,13 +133,17 @@ boardscore =  gainCapture * capt_value_sum...
          + gainOppprom * sum_opp_pawn_dist;
 
 %If a checkmate has occured, new boadscores are assigned     
-if opp_ischeckmate == 1,
+if opp_ischeckmate == 1
     boardscore = 99999;
 end
 
-if own_ischeckmate == 1,
+if own_ischeckmate == 1
     boardscore = -99999;
 end
 
+%checks if castling has occured
+if castle == 1
+    boardscore = boardscore + 500;
+end
 
 end
