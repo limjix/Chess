@@ -164,18 +164,13 @@ if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
     if own_ischeckmate == 1
         boardscore = -99999;
     end
+end
 
-<<<<<<< HEAD
-%checks if castling has occured
-if castle == 1
-    boardscore = boardscore + 250;
-=======
-    %checks if castling has occured
+%Checks if castling has occured
     if castle == 1
         boardscore = boardscore + 500;
     end
->>>>>>> origin/master
-end
+
 
 if(get(handles.setRandom,'Value')==1)
     rand* 2000;
