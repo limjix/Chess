@@ -122,6 +122,7 @@ gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
 gainOppprom = -10; %Discourages AI to promote opponent's pawns
+disp('hard')
 end
 %--------------------Gain Factor for Easy ---------------------------------
 if(get(handles.setEasy,'Value')==1)
@@ -133,6 +134,7 @@ gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
 gainOppprom = -10; %Discourages AI to promote opponent's pawns
+disp('easy')
 end
 %--------------------- Gain Factor for Random -----------------------------
 if(get(handles.setRandom,'Value')==1)
@@ -144,6 +146,7 @@ gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
 gainOppprom = -10; %Discourages AI to promote opponent's pawns
+disp('random1')
 end
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
@@ -172,6 +175,6 @@ if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
 end
 
 if(get(handles.setRandom,'Value')==1)
-    boardscore=rand* 2000
+    rand* 2000;
 end
 end
