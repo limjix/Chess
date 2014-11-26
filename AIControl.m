@@ -8,7 +8,7 @@ set(handles.UPS,'String',userboardscore)
 %-------------------------------------------------------------------------
 %                       Init Values
 %-------------------------------------------------------------------------
-depth = 2;
+depth = 3;
 set(handles.depth,'String',depth)
 
 %------------------ Stops Game Execution if White Wins -------------------

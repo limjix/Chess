@@ -143,7 +143,7 @@ end
 
 %checks if castling has occured
 if castle == 1
-    boardscore = boardscore + 500;
+    boardscore = boardscore + 250;
 end
 
 end
