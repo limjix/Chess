@@ -166,19 +166,12 @@ if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
     end
 end
 
-<<<<<<< HEAD
+
 %Checks if castling has occured
-=======
-%checks if castling has occured
->>>>>>> origin/master
     if castle == 1
         boardscore = boardscore + 250;
     end
-<<<<<<< HEAD
 
-=======
-end
->>>>>>> origin/master
 
 if(get(handles.setRandom,'Value')==1)
     boardscore=rand* 2000;
