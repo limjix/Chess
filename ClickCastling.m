@@ -118,15 +118,17 @@ num_moves(x_rook(2),y_rook(2)) = 0;
 [potentialmoves,capt_index] = analyseboard(chessboard,piece_colour,num_moves,colourturn);
 [checkopp]=KingCheck(chessboard,piece_colour,oppositecolour,capt_index,potentialmoves);
 if checkopp == 1 && onlyAIoption == 0
-    disp('Check')
+    set(handles.checkstat,'String','Check')
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        set(handles.gameconsole,'String','Checkmate, White Wins')
+        set(handles.checkstat,'String','Checkmate, White Wins')
     end
     elseif checkopp == 0 && onlyAIoption ==0
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        set(handles.gameconsole,'String','Stalemate')
+        set(handles.checkstat,'String','Stalemate')
+    else
+        set(handles.checkstat,'String','')
     end
 end
 

@@ -22,7 +22,7 @@ function varargout = ChessGame(varargin)
 
 % Edit the above text to modify the response to help ChessGame
 
-% Last Modified by GUIDE v2.5 26-Nov-2014 11:23:30
+% Last Modified by GUIDE v2.5 26-Nov-2014 20:23:29
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -56,14 +56,14 @@ function ChessGame_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 
 %-------------------- Creates the Background -----------------------------
-% % create an axes that spans the whole gui
-% ah = axes('unit', 'normalized', 'position', [0 0 1 1]);
-% % import the background image and show it on the axes
-% bg = imread('WoodText.jpg'); imagesc(bg);
-% % prevent plotting over the background and turn the axis off
-% set(ah,'handlevisibility','off','visible','off')
-% % making sure the background is behind all the other uicontrols
-% uistack(ah, 'bottom');
+% create an axes that spans the whole gui
+ah = axes('unit', 'normalized', 'position', [0 0 1 1]);
+% import the background image and show it on the axes
+bg = imread('WoodText.jpg'); imagesc(bg);
+% prevent plotting over the background and turn the axis off
+set(ah,'handlevisibility','off','visible','off')
+% making sure the background is behind all the other uicontrols
+uistack(ah, 'bottom');
 %-------------------------------------------------------------------------
 
 % Update handles structure
@@ -305,3 +305,39 @@ function checkstat_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in checkbox1.
+function checkbox1_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox1
+
+
+% --- Executes on button press in checkbox2.
+function checkbox2_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox2
+
+
+% --- Executes on button press in checkbox3.
+function checkbox3_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox3
+
+
+% --- Executes on button press in checkbox4.
+function checkbox4_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox4

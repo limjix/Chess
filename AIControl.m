@@ -8,7 +8,7 @@ set(handles.UPS,'String',userboardscore)
 %-------------------------------------------------------------------------
 %                       Init Values
 %-------------------------------------------------------------------------
-depth = 2;
+depth = 3;
 set(handles.depth,'String',depth)
 
 %------------------ Stops Game Execution if White Wins -------------------
@@ -31,26 +31,30 @@ set(handles.AIMsgs,'String',['Time Taken To Think Was: ' num2str(time) ' seconds
 end
 %Translates the results into B.top
 [B] = readchessboard(B,chessboard,piece_colour);
+%Iterates turn
+B.info.turn = B.info.turn + 1;
+
+%--------------------- Shows AI Board Score-------------------------------
 [AIBoardScore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,98);
 set(handles.APS,'String',AIBoardScore)
 
-%Iterates turn
-B.info.turn = B.info.turn + 1;
 
 %------------------------ Checks if AI has checkmated User ---------------
 [oppcolourpotentialmoves,oppcolourcapt_index] = analyseboard(chessboard, piece_colour,num_moves,98);
 
 [ischeck]=KingCheck(chessboard,piece_colour,119, oppcolourcapt_index,oppcolourpotentialmoves);
 if ischeck == 1
-    set(handles.gameconsole,'String','Check')
+    set(handles.checkstat,'String','Check')
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        set(handles.gameconsole,'String','Checkmate, Black Wins')
+        set(handles.checkstat,'String','Checkmate, Black Wins')
     end
 elseif ischeck == 0
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        set(handles.gameconsole,'String','Stalemate')
+        set(handles.checkstat,'String','Stalemate')
+    else
+        set(handles.checkstat,'String','')
     end
 end
 %-------------------------------------------------------------------------

@@ -115,12 +115,12 @@ end
 %------------------ Gain Factor ------------------------------------------
 gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
-gainThreats = -2.5; %Discourages AI to make moves that will lead to threats
+gainThreats = -3; %Discourages AI to make moves that will lead to threats
 gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
 gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
-gainOppprom = -1; %Discourages AI to promote opponent's pawns
+gainOppprom = -10; %Discourages AI to promote opponent's pawns
 
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
