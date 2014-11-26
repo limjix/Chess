@@ -172,6 +172,6 @@ if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
 end
 
 if(get(handles.setRandom,'Value')==1)
-    boardscore=rand* 2000
+    boardscore=rand* 2000;
 end
 end
