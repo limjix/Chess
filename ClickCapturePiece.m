@@ -123,7 +123,15 @@ for r=1:parameters.rows
     end
 end
 drawnow;
-AIControl(B,piece_colour,chessboard,num_moves,parameters, handles)
+if(get(handles.choice2,'Value')==1)
+    AIControl(B,piece_colour,chessboard,num_moves,parameters, handles);
+end
+if(get(handles.choice3,'Value')==1)
+    AIvsAI(B,piece_colour,chessboard,num_moves,parameters, handles)
+end
+if(get(handles.choice1,'Value')==1)
+    PlayerVsPlayer( B,piece_colour,chessboard,num_moves,parameters, handles )
+end
 end
 %---------------------------------------------------------------------------------------
 end

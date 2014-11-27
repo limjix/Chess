@@ -121,4 +121,8 @@ for r=1:rows
     end
 end
 
+if(get(handles.choice3,'Value')==1)
+    AIvsAI(B,piece_colour,chessboard,num_moves,parameters, handles)
+end
+
 end

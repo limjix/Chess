@@ -7,11 +7,9 @@ function [chessboard,piece_colour, num_moves,allowscheck]=ClickPawnPromo(v1,v2,x
 %--------------------------------------------------------------------------
 if(mod(B.info.turn,2)==1)
     colourturn = 119;
-    colour = 1;
     oppositecolour = 98;
 else
     colourturn = 98;
-    colour = -1;
     oppositecolour = 119;
 end
 
@@ -170,7 +168,15 @@ for r=1:parameters.rows
     end
 end
 drawnow;
-AIControl(B,piece_colour,chessboard,num_moves,parameters, handles)
+if(get(handles.choice2,'Value')==1)
+    AIControl(B,piece_colour,chessboard,num_moves,parameters, handles);
+end
+if(get(handles.choice3,'Value')==1)
+    AIvsAI(B,piece_colour,chessboard,num_moves,parameters, handles)
+end
+if(get(handles.choice1,'Value')==1)
+    PlayerVsPlayer( B,piece_colour,chessboard,num_moves,parameters, handles )
+end
 end
 %---------------------------------------------------------------------------------------
 end

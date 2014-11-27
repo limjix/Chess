@@ -22,7 +22,7 @@ function varargout = ChessGame(varargin)
 
 % Edit the above text to modify the response to help ChessGame
 
-% Last Modified by GUIDE v2.5 26-Nov-2014 20:52:51
+% Last Modified by GUIDE v2.5 27-Nov-2014 01:16:31
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -55,6 +55,7 @@ function ChessGame_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for ChessGame
 handles.output = hObject;
 set(handles.setHard,'Value',1);
+set(handles.choice2,'Value',1);
 %-------------------- Creates the Background -----------------------------
 % create an axes that spans the whole gui
 ah = axes('unit', 'normalized', 'position', [0 0 1 1]);
@@ -349,3 +350,34 @@ function checkbox4_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of checkbox4
+
+
+% --- Executes on button press in choice1.
+function choice1_Callback(hObject, eventdata, handles)
+% hObject    handle to choice1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of choice1
+    set(handles.choice2,'Value',0);
+    set(handles.choice3,'Value',0);
+
+% --- Executes on button press in choice2.
+function choice2_Callback(hObject, eventdata, handles)
+% hObject    handle to choice2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of choice2
+    set(handles.choice1,'Value',0);
+    set(handles.choice3,'Value',0);
+
+% --- Executes on button press in choice3.
+function choice3_Callback(hObject, eventdata, handles)
+% hObject    handle to choice3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of choice3
+    set(handles.choice2,'Value',0);
+    set(handles.choice1,'Value',0);
