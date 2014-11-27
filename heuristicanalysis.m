@@ -125,25 +125,25 @@ gainOppprom = -10; %Discourages AI to promote opponent's pawns
 end
 %--------------------Gain Factor for Easy ---------------------------------
 if(get(handles.setEasy,'Value')==1)
-gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
+gainCapture = 2;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
-gainThreats = -3; %Discourages AI to make moves that will lead to threats
-gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
-gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
-gainCentre = 1; %Encourages AI to increase control of centre space
-gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
-gainOppprom = -10; %Discourages AI to promote opponent's pawns
+gainThreats = -2; %Discourages AI to make moves that will lead to threats
+gainOpppieces = 3.5; %Encourages to make moves that decrease opponents pieces
+gainOwnpieces = 1; %Discourages AI from making moves that decrease own pieces
+gainCentre = 10; %Encourages AI to increase control of centre space
+gainOwnprom = 10; %Encourages AI to promote own pawns close to the end of the board
+gainOppprom = -1; %Discourages AI to promote opponent's pawns
 end
 %--------------------- Gain Factor for Random -----------------------------
 if(get(handles.setRandom,'Value')==1)
-gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
-gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
-gainThreats = -3; %Discourages AI to make moves that will lead to threats
-gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
-gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
-gainCentre = 1; %Encourages AI to increase control of centre space
-gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
-gainOppprom = -10; %Discourages AI to promote opponent's pawns
+gainCapture = 0;  %Encourages AI to position a piece such that it can capture more pieces in the next move
+gainMoves = 0; %Encourages AI to position such that it opens space for other pieces
+gainThreats = 0; %Discourages AI to make moves that will lead to threats
+gainOpppieces = 0; %Encourages to make moves that decrease opponents pieces
+gainOwnpieces = 0; %Discourages AI from making moves that decrease own pieces
+gainCentre = 0; %Encourages AI to increase control of centre space
+gainOwnprom = 0; %Encourages AI to promote own pawns close to the end of the board
+gainOppprom = 0; %Discourages AI to promote opponent's pawns
 end
 %----------------- Final Score Calculation ------------------------------
 boardscore =  gainCapture * capt_value_sum... 
