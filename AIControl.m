@@ -33,7 +33,7 @@ if ischeck == 1
     set(handles.checkstat,'String','Check')
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
-        set(handles.checkstat,'String','Checkmate, Black Wins')
+        set(handles.checkstat,'String','Checkmate, White Wins')
     end
 elseif ischeck == 0
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
@@ -46,8 +46,8 @@ end
 %--------------------Plot UserBoardScore-----------------------------------
 
  handles.turnforwhite = [handles.turnforwhite B.info.turn-1];
- plot(handles.graph,handles.turnforwhite,handles.userboardscore,'o-b',...
-     handles.turnforblack,handles.AIBoardscore,'x-r','LineWidth',2)
+ plot(handles.graph,handles.turnforwhite,handles.userboardscore,'-b',...
+     handles.turnforblack,handles.AIBoardscore,'-r','LineWidth',2)
  set(handles.graph,'XColor','w','YColor','w')
  xlabel(handles.graph,'Turn')
  ylabel(handles.graph,'Score')
@@ -76,8 +76,8 @@ handles.AIBoardscore = [handles.AIBoardscore AIBoardScore];
 %---------------------Plots AI Board Score--------------------------------
 
  handles.turnforblack = [handles.turnforblack B.info.turn-1];
- plot(handles.graph,handles.turnforwhite,handles.userboardscore,'o-b',...
-     handles.turnforblack,handles.AIBoardscore,'x-r','LineWidth',2)
+ plot(handles.graph,handles.turnforwhite,handles.userboardscore,'-b',...
+     handles.turnforblack,handles.AIBoardscore,'-r','LineWidth',2)
  set(handles.graph,'XColor','w','YColor','w')
  xlabel(handles.graph,'Turn')
  ylabel(handles.graph,'Score')
@@ -91,6 +91,7 @@ if ischeck == 1
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);
     if ischeckmate
         set(handles.checkstat,'String','Checkmate, Black Wins')
+        return
     end
 elseif ischeck == 0
     [ischeckmate]=checkmate(B,chessboard,piece_colour, num_moves);

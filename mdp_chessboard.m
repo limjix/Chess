@@ -8,8 +8,8 @@ uih.f1 = handles.graph;
 
 handles.userboardscore = 0;
 handles.AIBoardscore = 0;
-handles.turnforblack= 0;
-handles.turnforwhite = 0;
+handles.turnforblack= 2;
+handles.turnforwhite = 1;
 
 %-------------------Sets every box and figure to start position -----------
 set(handles.gameconsole,'String','')
