@@ -117,7 +117,7 @@ if(get(handles.setHard,'Value')==1)
 gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
 gainThreats = -4; %Discourages AI to make moves that will lead to threats
-gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
+gainOpppieces = 25; %Encourages to make moves that decrease opponents pieces
 gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
 gainOwnprom = 1; %Encourages AI to promote own pawns close to the end of the board
@@ -154,7 +154,10 @@ boardscore =  gainCapture * capt_value_sum...
          + gainCentre * centre_space_sum...
          + gainOwnprom * sum_own_pawn_dist...
          + gainOppprom * sum_opp_pawn_dist;
-
+%Checks if castling has occured
+    if castle == 1
+        boardscore = boardscore + 250;
+    end
 %If a checkmate has occured, new boadscores are assigned
 if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
     if opp_ischeckmate == 1
@@ -165,13 +168,6 @@ if(get(handles.setHard,'Value')==1 || get(handles.setEasy,'Value')==1 )
         boardscore = -99999;
     end
 end
-
-
-%Checks if castling has occured
-    if castle == 1
-        boardscore = boardscore + 250;
-    end
-
 
 if(get(handles.setRandom,'Value')==1)
     boardscore=rand* 2000;

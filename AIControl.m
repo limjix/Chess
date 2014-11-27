@@ -16,13 +16,7 @@ end
 [userboardscore] = heuristicanalysis(B,chessboard, piece_colour,num_moves,119,handles);
 set(handles.UPS,'String',userboardscore)
 handles.userboardscore = [handles.userboardscore userboardscore];
-if( sum(sum(chessboard))<40 )
-    depth = 5;
-elseif ( sum(sum(chessboard))<60 )
-    depth = 4;
-else
-    depth = 2;
-end
+depth = 2;
 set(handles.depth,'String',depth)
 
 %------------------ Stops Game Execution if White Wins -------------------
