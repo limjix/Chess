@@ -116,7 +116,7 @@ end
 if(get(handles.setHard,'Value')==1)
 gainCapture = 3;  %Encourages AI to position a piece such that it can capture more pieces in the next move
 gainMoves = 10; %Encourages AI to position such that it opens space for other pieces
-gainThreats = -3; %Discourages AI to make moves that will lead to threats
+gainThreats = -4; %Discourages AI to make moves that will lead to threats
 gainOpppieces = 30; %Encourages to make moves that decrease opponents pieces
 gainOwnpieces = -5; %Discourages AI from making moves that decrease own pieces
 gainCentre = 1; %Encourages AI to increase control of centre space
